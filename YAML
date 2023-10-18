@@ -1,0 +1,32 @@
+---
+# Members of your group.
+group:
+  - name: Grace Lim
+    netid: gl487
+  - name: Jerry Wang
+    netid: yhw4
+  - name: Collin Li
+    netid: cl2353
+  - name: Kevin Ram
+    netid: kmr232
+# Your PM.
+pm:
+  name: Ankit Lakkapragada
+  netid: asl256
+# Set to false if you don't want your gallery entry to be public.
+publish: true
+# Pithy title
+title: "Big Red Scheduler"
+# OK if this is a Cornell Github link, but public gallery viewers won't be able to see it.
+git-repo: "https://github.com/graclim/cs3110-finalproject/tree/main"
+# If you have no demo screencast, replace the url string with an empty string ""
+# demo-video-url: "https://www.youtube.com/watch?v=eSBybJGZoCU"
+# Write a short, attention-grabbing description of your project.
+desc: >
+  Our project is a course scheduling platform that will be used by students 
+  when they enroll in classes. Its functionalities will be similar to Cornell's 
+  Student Center, where students are able to shop for classes, view them, add,
+  drop, as well as enroll in them. Students will not be able to enroll in 
+  classes that occur at the same time, and will also make sure that they have 
+  the correct prerequisites done. Users will be able to login into the
+  interface, and their data will be saved.
