@@ -1,0 +1,18 @@
+INSTALLATION AND USAGE GUIDE
+
+Prerequisites to run the program:
+- Make sure that you have OCaml installed on your computer.
+- Make sure that you have utop installed on your computer.
+
+How to run the program:
+- Open terminal or the command prompt window.
+- Navigate to the directory where "main.ml" is saved. You can do this with
+  cd path/to/directory.
+- Type in 'utop' and press enter to run utop.
+- Run the "main.ml" script by typing #use "main.ml";; into utop.
+- After running this command, the "main.ml" script with run. You can follow
+  the instructions on the screen to display/add/drop courses.
+
+How to exit the program:
+- Exit the program by entering 0 to quit
+- Exit utop by #quit;; and press enter
