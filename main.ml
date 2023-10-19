@@ -1,13 +1,28 @@
 open String
 
-(* Define the structure of a course *)
-type course = {id: int; name: string; description: string}
+type time = {start: int; (* in minutes, 0 meaning 12:00 AM, etc. *) 
+             finish: int}
 
-(* CS courses *)
+type schedule = {days: string list; (* ["Monday", "Wednesday", "Friday"] etc. *)
+                 time: time}  (* time remains the same *)
+
+
+type course = {id: int; 
+               name: string; 
+               description: string; 
+               schedule: schedule}
+
+(* CS Courses *)
 let cs_courses = [
-  {id=1; name="CS1110"; description="Introduction to Computing: A Design and Development Perspective"};
-  {id=2; name="CS1112"; description="Introduction to Computing: An Engineering and Science Perspective"};
-  {id=3; name="CS1132"; description="Short Course in MATLAB"};
+  {id=1; 
+   name="CS1110"; 
+   description="Introduction to Computing: A Design and Development Perspective"; 
+   schedule={days=["Monday"; "Wednesday"]; time={start=540; finish=630}}};
+  {id=2;
+   name="CS1112";
+   description="Introduction to Computing: An Engineering and Science Perspective";
+   schedule={days=["Monday"]; time={start=540; finish=630}}};
+  (* {id=3; name="CS1132"; description="Short Course in MATLAB"};
   {id=4; name="CS1133"; description="Short Course in Python"};
   {id=5; name="CS1620"; description="Visual Imaging in the Electronic Age"};
   {id=6; name="CS1710"; description="Introduction to Cognitive Science"};
@@ -36,7 +51,7 @@ let cs_courses = [
   {id=29; name="CS4787"; description="Principles of Large-Scale Machine Learning Systems"};
   {id=30; name="CS4812"; description="Quantum Information Processing"};
   {id=31; name="CS4820"; description="Introduction to Analysis of Algorithms"};
-  {id=32; name="CS4860"; description="Applied Logic"};
+  {id=32; name="CS4860"; description="Applied Logic"}; *)
 ]
 
 (* displays all available CS courses *)
@@ -55,12 +70,25 @@ let display_courses () =
 (* a mutable list representing the user's courses *)
 let my_courses = ref []
 
+(* function to check if two schedules conflict *)
+let is_conflict (s1: schedule) (s2: schedule) : bool =
+  let shared_days = List.filter (fun day -> List.mem day s2.days) s1.days in
+  (* if there's at least one shared day and the times conflict, then there's a conflict. *)
+  shared_days <> [] && not (s1.time.finish <= s2.time.start || s2.time.finish <= s1.time.start)
+
+
+(* function to check if a new course conflicts with existing courses *)
+let has_schedule_conflict new_course my_courses =
+  List.exists (fun existing_course -> is_conflict existing_course.schedule new_course.schedule) my_courses
+
 (* user can add a course by ID *)
 let add_course_ID course_id =
   try
     let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
     if List.exists (fun c -> c.id = course_id) !my_courses then
       print_endline "You are already enrolled in this course."
+    else if has_schedule_conflict course_to_add !my_courses then
+      print_endline "There is a schedule conflict with your current courses."
     else
       (my_courses := course_to_add :: !my_courses;
        print_endline ("Added course: " ^ course_to_add.name))
@@ -72,11 +100,12 @@ let add_course_name course_name =
     let course_to_add = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) cs_courses in
     if List.exists (fun c -> c.name = course_to_add.name) !my_courses then
       print_endline "You are already enrolled in this course."
+    else if has_schedule_conflict course_to_add !my_courses then
+      print_endline "There is a schedule conflict with your current courses."
     else
       (my_courses := course_to_add :: !my_courses;
        print_endline ("Added course: " ^ course_to_add.name))
   with Not_found -> print_endline "Course not found."
-
 
 (* user can drop a course by ID *)
 let drop_course_ID course_id =
