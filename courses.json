@@ -131,6 +131,9 @@
     "description": "Foundations of Artificial Intelligence",
     "credits": 3.0
   },
+  {
+    "id":23,
+    "name": "CS4701",
     "description": "Practicum in Artificial Intelligence",
     "credits": 2.0
   },
