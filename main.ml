@@ -3,14 +3,39 @@
 open String
 open Yojson
 
-(* Define the structure of a course *)
-type course = {id: int; name: string; description: string}
+type time = {
+  start : int;
+  finish : int;
+}
+
+type schedule = {
+  days : string list;
+  time : time;
+}
+
 type course = {
   id : int;
   name : string;
   description : string;
-  credits : float
+  credits : float;
+  schedule : schedule;
 }
+
+(* A helper function to extract time information. *)
+let to_time json =
+  let open Yojson.Basic.Util in
+  {
+    start = json |> member "start" |> to_int;
+    finish = json |> member "finish" |> to_int;
+  }
+
+(* A helper function to extract schedule information. *)
+let to_schedule json =
+  let open Yojson.Basic.Util in
+  {
+    days = json |> member "days" |> to_list |> List.map to_string;
+    time = json |> member "time" |> to_time;
+  }
 
 let cs_courses =
   let json = Yojson.Basic.from_file "courses.json" in
@@ -21,8 +46,9 @@ let cs_courses =
          let name = json |> member "name" |> to_string in
          let description = json |> member "description" |> to_string in
          let credits = json |> member "credits" |> to_float in
+         let schedule = json |> member "schedule" |> to_schedule in
 
-         { id; name; description; credits })
+         { id; name; description; credits; schedule })
 
 (* Define the structure of a user *)
 type user = {netid: string; password: string; mutable total_credits: float; college: string}
@@ -59,50 +85,25 @@ let display_total_credits netid =
 (* Credit limit of student based on their college *)
 let get_credit_limit college =
   match college with
-  | "engineering" -> 18.0
+  | "engineering" -> 20.0
   | "arts and sciences" -> 22.0
   | _ -> failwith "Unknown college"
 
 (* A mutable list representing the user's courses *)
 let my_courses = ref []
 
-(* function to check if two schedules conflict *)
+(* A function to check if two schedules conflict *)
 let is_conflict (s1: schedule) (s2: schedule) : bool =
   let shared_days = List.filter (fun day -> List.mem day s2.days) s1.days in
   (* if there's at least one shared day and the times conflict, then there's a conflict. *)
   shared_days <> [] && not (s1.time.finish <= s2.time.start || s2.time.finish <= s1.time.start)
 
-
-(* function to check if a new course conflicts with existing courses *)
+(* A function to check if a new course conflicts with existing courses *)
 let has_schedule_conflict new_course my_courses =
   List.exists (fun existing_course -> is_conflict existing_course.schedule new_course.schedule) my_courses
 
 (* User can add a course by ID *)
 let add_course_ID netid course_id =
-  (* try
-    let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
-    if List.exists (fun c -> c.id = course_id) !my_courses then
-      print_endline "You are already enrolled in this course."
-    else if has_schedule_conflict course_to_add !my_courses then
-      print_endline "There is a schedule conflict with your current courses."
-    else
-      (my_courses := course_to_add :: !my_courses;
-       print_endline ("Added course: " ^ course_to_add.name))
-  with Not_found -> print_endline "Course not found." *)
-  try
-    let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
-    let user = List.find (fun u -> u.netid = netid) users in
-    let current_credits = total_credits !my_courses in
-    if current_credits +. course_to_add.credits > get_credit_limit user.college then
-      print_endline "Cannot add course: credit limit exceeded."
-    else if List.exists (fun c -> c.id = course_id) !my_courses then
-      print_endline "You are already enrolled in this course."
-    else if has_schedule_conflict course_to_add !my_courses then
-      print_endline "There is a schedule conflict with your current courses."
-    else
-      (my_courses := course_to_add :: !my_courses;
-       print_endline ("Added course: " ^ course_to_add.name))
-  with Not_found -> print_endline "Course not found." *)
   try
     let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
     let user = List.find (fun u -> u.netid = netid) users in
@@ -118,30 +119,6 @@ let add_course_ID netid course_id =
 
 (* User can add a course by name *)
 let add_course_name netid course_name =
-  (* try
-    let course_to_add = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) cs_courses in
-    if List.exists (fun c -> c.name = course_to_add.name) !my_courses then
-      print_endline "You are already enrolled in this course."
-    else if has_schedule_conflict course_to_add !my_courses then
-      print_endline "There is a schedule conflict with your current courses."
-    else
-      (my_courses := course_to_add :: !my_courses;
-       print_endline ("Added course: " ^ course_to_add.name))
-  with Not_found -> print_endline "Course not found." *)
-  try
-    let course_to_add = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) cs_courses in
-    let user = List.find (fun u -> u.netid = netid) users in
-    let current_credits = total_credits !my_courses in
-    if current_credits +. course_to_add.credits > get_credit_limit user.college then
-      print_endline "Cannot add course: credit limit exceeded."
-    else if List.exists (fun c -> c.name = course_to_add.name) !my_courses then
-      print_endline "You are already enrolled in this course."
-    else if has_schedule_conflict course_to_add !my_courses then
-      print_endline "There is a schedule conflict with your current courses."
-    else
-      (my_courses := course_to_add :: !my_courses;
-       print_endline ("Added course: " ^ course_to_add.name))
-  with Not_found -> print_endline "Course not found." *)
   try
     let course_to_add = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) cs_courses in
     let user = List.find (fun u -> u.netid = netid) users in
@@ -157,11 +134,6 @@ let add_course_name netid course_name =
 
 (* User can drop a course by ID *)
 let drop_course_ID netid course_id =
-  (* try
-    let course_to_drop = List.find (fun c -> c.id = course_id) !my_courses in
-    my_courses := List.filter (fun c -> c.id <> course_id) !my_courses;
-    print_endline ("Dropped course: " ^ course_to_drop.name)
-  with Not_found -> print_endline "You are not enrolled in this course." *)
   try
     let course_to_drop = List.find (fun c -> c.id = course_id) !my_courses in
     my_courses := List.filter (fun c -> c.id <> course_id) !my_courses;
@@ -172,11 +144,6 @@ let drop_course_ID netid course_id =
 
 (* User can drop a course by name *)
 let drop_course_name netid course_name =
-  (* try
-    let course_to_drop = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) !my_courses in
-    my_courses := List.filter (fun c -> c.name <> course_to_drop.name) !my_courses;
-    print_endline ("Dropped course: " ^ course_to_drop.name)
-  with Not_found -> print_endline "You are not enrolled in this course." *)
   try
     let course_to_drop = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) !my_courses in
     my_courses := List.filter (fun c -> c.name <> course_to_drop.name) !my_courses;
