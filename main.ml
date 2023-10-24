@@ -108,10 +108,13 @@ let add_course_ID netid course_id =
     let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
     let user = List.find (fun u -> u.netid = netid) users in
     let current_credits = total_credits !my_courses in
+
     if current_credits +. course_to_add.credits > get_credit_limit user.college then
       print_endline "Cannot add course: credit limit exceeded."
     else if List.exists (fun c -> c.id = course_id) !my_courses then
       print_endline "You are already enrolled in this course."
+    else if has_schedule_conflict course_to_add !my_courses then
+      print_endline "Cannot add course: there is a schedule conflict with a course you're already enrolled in."
     else
       (my_courses := course_to_add :: !my_courses;
        print_endline ("Added course: " ^ course_to_add.name))
@@ -123,14 +126,20 @@ let add_course_name netid course_name =
     let course_to_add = List.find (fun c -> String.lowercase_ascii c.name = String.lowercase_ascii course_name) cs_courses in
     let user = List.find (fun u -> u.netid = netid) users in
     let current_credits = total_credits !my_courses in
+    
     if current_credits +. course_to_add.credits > get_credit_limit user.college then
       print_endline "Cannot add course: credit limit exceeded."
     else if List.exists (fun c -> c.name = course_to_add.name) !my_courses then
       print_endline "You are already enrolled in this course."
+    else if has_schedule_conflict course_to_add !my_courses then
+      print_endline "Cannot add course: there is a schedule conflict with an existing course."
     else
       (my_courses := course_to_add :: !my_courses;
        print_endline ("Added course: " ^ course_to_add.name))
-  with Not_found -> print_endline "Course not found."
+  with 
+    | Not_found -> print_endline "Course not found."
+    | e -> 
+        print_endline ("An unexpected error occurred: " ^ Printexc.to_string e)
 
 (* User can drop a course by ID *)
 let drop_course_ID netid course_id =
