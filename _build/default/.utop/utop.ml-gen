@@ -25,6 +25,6 @@ Clflags.include_dirs :=
   ; "/home/jerry/.opam/cs3110-2023fa/lib/xdg"
   ; "/home/jerry/.opam/cs3110-2023fa/lib/yojson"
   ; "/home/jerry/.opam/cs3110-2023fa/lib/zed"
-  ; "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/default/src/.scheduler.objs/byte"
+  ; "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/default/src/.course_scheduler.objs/byte"
   ];
 UTop_main.main ();

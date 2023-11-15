@@ -1,5 +1,5 @@
 (library 
- (name scheduler)
- (public_name Scheduler)
+ (name course_scheduler)
+ (public_name Course_Scheduler)
  (libraries yojson)
 )
