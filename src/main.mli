@@ -1,5 +1,5 @@
-open String
 open Yojson
+open Users
 
 (** Type representing time with a start and finish as integers *)
 type time
@@ -10,20 +10,14 @@ type schedule
 (** Type representing a course with an id, name, description, credits, and schedule *)
 type course
 
-(** Type representing a user with a netid, password, total_credits, and college *)
-type user
-
 (** Convert JSON to time type *)
-val to_time : Yojson -> time
+val to_time : Yojson.Basic.t -> time
 
 (** Convert JSON to schedule type *)
-val to_schedule : Yojson -> schedule
+val to_schedule : Yojson.Basic.t -> schedule
 
 (** List of courses loaded from JSON *)
 val cs_courses : course list
-
-(** Hard-coded list of users *)
-val users : user list
 
 (** Display a list of all available CS courses *)
 val display_courses : unit -> unit

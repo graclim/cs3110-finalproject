@@ -1,6 +1,5 @@
-open Users
-open String
 open Yojson
+open Users
 
 type time = {
   start : int;
@@ -37,7 +36,7 @@ let to_schedule json =
   }
 
 let cs_courses =
-  let json = Yojson.Basic.from_file "../data/courses.json" in
+  let json = Yojson.Basic.from_file "data/courses.json" in
   let open Yojson.Basic.Util in
   json |> to_list
   |> List.map (fun json ->
@@ -182,7 +181,7 @@ let drop_course_ID netid course_id =
   try
     let course_to_drop = List.find (fun c -> c.id = course_id) !my_courses in
     my_courses := List.filter (fun c -> c.id <> course_id) !my_courses;
-    let user = List.find (fun u -> Users.get_netid = netid) Users.users in
+    let user = List.find (fun u -> Users.get_netid u = netid) Users.users in
     Users.set_total_credits ((Users.get_total_credits user) -. course_to_drop.credits) user;
     print_endline ("Dropped course: " ^ course_to_drop.name)
   with Not_found ->
@@ -247,7 +246,8 @@ let rec main netid =
   | 4 ->
       print_endline "";
       print_string "Enter course ID to drop: ";
-      drop_course_ID netid (read_int ());
+      (*NEED TO ADD A TRY EXCEPTION CLAUSE FOR READ_LINE*)
+      drop_course_ID (netid) (int_of_string (read_line ())); 
       main netid
   | 5 ->
       print_endline "";
@@ -274,7 +274,7 @@ let rec main netid =
 (* User login interface *)
 let rec login () =
   print_endline "Please enter your netid:";
-  let netid = read_line () in
+  let netid : string = read_line () in
   print_endline "Please enter your password:";
   let password = read_line () in
   if Users.authenticate netid password then (

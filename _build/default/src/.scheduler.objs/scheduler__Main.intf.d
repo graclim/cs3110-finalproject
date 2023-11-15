@@ -1,1 +1,1 @@
-src/main.mli: String Yojson
+src/main.mli: Users Yojson
