@@ -1,5 +1,3 @@
-#require "yojson"
-
 open String
 open Yojson
 
@@ -62,9 +60,6 @@ val drop_course_name : string -> string -> unit
 
 (** Display courses that the user is currently enrolled in *)
 val display_my_courses : unit -> unit
-
-(** Authenticate a user by netid and password *)
-val authenticate : string -> string -> bool
 
 (** Main user interface *)
 val main : string -> unit

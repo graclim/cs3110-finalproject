@@ -1,9 +1,8 @@
-#require "yojson"
-
+open Users
 open String
 open Yojson
 
-type time = {
+(* type time = {
   start : int;
   finish : int;
 }
@@ -38,7 +37,7 @@ let to_schedule json =
   }
 
 let cs_courses =
-  let json = Yojson.Basic.from_file "courses.json" in
+  let json = Yojson.Basic.from_file "../data/courses.json" in
   let open Yojson.Basic.Util in
   json |> to_list
   |> List.map (fun json ->
@@ -50,30 +49,6 @@ let cs_courses =
 
          { id; name; description; credits; schedule })
 
-(* Define the structure of a user *)
-type user = {
-  netid : string;
-  password : string;
-  mutable total_credits : float;
-  college : string;
-}
-
-(* Hard-coded list of users for demonstration purposes *)
-let users =
-  [
-    {
-      netid = "user1";
-      password = "pass1";
-      total_credits = 0.0;
-      college = "engineering";
-    };
-    {
-      netid = "user2";
-      password = "pass2";
-      total_credits = 0.0;
-      college = "arts and sciences";
-    };
-  ]
 
 (* Displays all available CS courses *)
 let display_courses () =
@@ -95,8 +70,8 @@ let total_credits courses =
 (* Prints out total number of credits a student is planning on taking *)
 let display_total_credits netid =
   try
-    let user = List.find (fun u -> u.netid = netid) users in
-    Printf.printf "Total credits for %s: %.2f\n" user.netid user.total_credits
+    let user = List.find (fun u -> (Users.get_netid user) = netid) Users.users in
+    Printf.printf "Total credits for %s: %.2f\n" (Users.get_netid user) (Users.get_total_credits user) 
   with Not_found -> print_endline "User not found."
 
 (* Credit limit of student based on their college *)
@@ -141,10 +116,10 @@ let has_schedule_conflict new_course my_courses =
 let add_course_ID netid course_id =
   try
     let course_to_add = List.find (fun c -> c.id = course_id) cs_courses in
-    let user = List.find (fun u -> u.netid = netid) users in
+    let user = List.find (fun u -> (Users.get_netid u) = netid) Users.users in
     let current_credits = total_credits !my_courses in
 
-    if current_credits +. course_to_add.credits > get_credit_limit user.college
+    if current_credits +. course_to_add.credits > get_credit_limit (Users.get_college user)
     then print_endline "Cannot add course: credit limit exceeded."
     else if List.exists (fun c -> c.id = course_id) !my_courses then
       print_endline "You are already enrolled in this course."
@@ -152,10 +127,10 @@ let add_course_ID netid course_id =
       print_endline
         "Cannot add course: there is a schedule conflict with a course you're \
          already enrolled in."
-    else (
+    else 
       my_courses := course_to_add :: !my_courses;
-      user.total_credits <- user.total_credits +. course_to_add.credits;
-      print_endline ("Added course: " ^ course_to_add.name))
+      Users.set_total_credits ((Users.get_total_credits user) +. course_to_add.credits) user;
+      print_endline ("Added course: " ^ course_to_add.name)
   with Not_found -> print_endline "Course not found."
 
 (* User can add a course by name *)
@@ -183,10 +158,10 @@ let add_course_name netid course_name =
           String.lowercase_ascii c.name = String.lowercase_ascii course_name)
         cs_courses
     in
-    let user = List.find (fun u -> u.netid = netid) users in
+    let user = List.find (fun u -> (Users.get_netid u) = netid) Users.users in
     let current_credits = total_credits !my_courses in
 
-    if current_credits +. course_to_add.credits > get_credit_limit user.college
+    if current_credits +. course_to_add.credits > get_credit_limit (Users.get_college user)
     then print_endline "Cannot add course: credit limit exceeded."
     else if List.exists (fun c -> c.name = course_name) !my_courses then
       print_endline "You are already enrolled in this course."
@@ -194,10 +169,10 @@ let add_course_name netid course_name =
       print_endline
         "Cannot add course: there is a schedule conflict with an existing \
          course."
-    else (
+    else 
       my_courses := course_to_add :: !my_courses;
-      user.total_credits <- user.total_credits +. course_to_add.credits;
-      print_endline ("Added course: " ^ course_to_add.name))
+      Users.set_total_credits ((Users.get_total_credits user) +. course_to_add.credits) user;
+      print_endline ("Added course: " ^ course_to_add.name)
   with
   | Not_found -> print_endline "Course not found."
   | e -> print_endline ("An unexpected error occurred: " ^ Printexc.to_string e)
@@ -207,8 +182,8 @@ let drop_course_ID netid course_id =
   try
     let course_to_drop = List.find (fun c -> c.id = course_id) !my_courses in
     my_courses := List.filter (fun c -> c.id <> course_id) !my_courses;
-    let user = List.find (fun u -> u.netid = netid) users in
-    user.total_credits <- user.total_credits -. course_to_drop.credits;
+    let user = List.find (fun u -> u.netid = netid) Users.users in
+    Users.set_total_credits ((Users.get_total_credits user) -. course_to_drop.credits) user;
     print_endline ("Dropped course: " ^ course_to_drop.name)
   with Not_found ->
     print_endline "You are not enrolled in this course or user not found."
@@ -224,8 +199,8 @@ let drop_course_name netid course_name =
     in
     my_courses :=
       List.filter (fun c -> c.name <> course_to_drop.name) !my_courses;
-    let user = List.find (fun u -> u.netid = netid) users in
-    user.total_credits <- user.total_credits -. course_to_drop.credits;
+    let user = List.find (fun u -> (Users.get_netid u) = netid) Users.users in
+    Users.set_total_credits ((Users.get_total_credits user) -. course_to_drop.credits) user; 
     print_endline ("Dropped course: " ^ course_to_drop.name)
   with Not_found ->
     print_endline "You are not enrolled in this course or user not found."
@@ -243,9 +218,6 @@ let display_my_courses () =
   print_endline "My courses:";
   print_my_courses !my_courses
 
-(* Checks if user netid and password input is a valid user *)
-let authenticate netid password =
-  List.exists (fun user -> user.netid = netid && user.password = password) users
 
 (* Main user interface *)
 let rec main netid =
@@ -305,7 +277,7 @@ let rec login () =
   let netid = read_line () in
   print_endline "Please enter your password:";
   let password = read_line () in
-  if authenticate netid password then (
+  if Users.authenticate netid password then (
     print_endline "Login successful.";
     print_endline "";
     main netid)
@@ -315,4 +287,4 @@ let rec login () =
     login ())
 
 (* Run login *)
-let () = login ()
+let () = login () *)
