@@ -3,9 +3,6 @@
 (** @canonical Course_scheduler.Courses *)
 module Courses = Course_scheduler__Courses
 
-(** @canonical Course_scheduler.Interface *)
-module Interface = Course_scheduler__Interface
-
 (** @canonical Course_scheduler.Scheduler *)
 module Scheduler = Course_scheduler__Scheduler
 

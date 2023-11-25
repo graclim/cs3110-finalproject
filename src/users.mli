@@ -1,6 +1,9 @@
 (** Type representing a user with a netid, password, total_credits, and college *)
 type user
 
+(* Create a new user *)
+val make_user : string -> string -> string -> user
+
 (** Hard-coded list of users *)
 val users : user list
 

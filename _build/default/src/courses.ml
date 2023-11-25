@@ -19,6 +19,24 @@ type course = {
   schedule : schedule;
 }
 
+let make_time start_time finish_time = {
+  start = start_time;
+  finish = finish_time;
+}
+
+let make_schedule days time = {
+  days = days;
+  time = time;
+}
+
+let make_course id name description credits schedule = {
+  id = id;
+  name = name;
+  description = description;
+  credits = credits;
+  schedule = schedule;
+}
+
 (* A helper function to extract time information. *)
 let to_time json =
   let open Yojson.Basic.Util in
@@ -54,7 +72,7 @@ let to_schedule json =
   }
 
 let cs_courses =
-  let json = Yojson.Basic.from_file "data/courses.json" in
+  let json = Yojson.Basic.from_file "courses.json" in
   let open Yojson.Basic.Util in
   json |> to_list
   |> List.map (fun json ->
@@ -66,6 +84,7 @@ let cs_courses =
 
          { id; name; description; credits; schedule })
 
+let get_cs_courses () = cs_courses
 
 (* Displays all available CS courses *)
 let display_courses () =

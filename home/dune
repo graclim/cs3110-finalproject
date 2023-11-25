@@ -1,0 +1,3 @@
+(executable
+ (name home)
+ (libraries ounit2 Course_Scheduler yojson))

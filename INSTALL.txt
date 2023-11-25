@@ -6,13 +6,15 @@ Prerequisites to run the program:
 
 How to run the program:
 - Open terminal or the command prompt window.
-- Navigate to the directory where "main.ml" is saved. You can do this with
-  cd path/to/directory.
-- Type in 'utop' and press enter to run utop.
-- Run the "main.ml" script by typing #use "main.ml";; into utop.
-- After running this command, the "main.ml" script with run. You can follow
+- Navigate to the directory where this project is saved
+- Type in "make play" and press enter to run the program
+- After running this command, the main script with run. You can follow
   the instructions on the screen to display/add/drop courses.
 
 How to exit the program:
-- Exit the program by entering 0 to quit
-- Exit utop by #quit;; and press enter
+- Exit the program by entering 0 to quit when asked to choose what to do.
+
+How to run the test cases:
+- Open terminal or the command prompt window.
+- Navigate to the directory where this project is saved
+- Type in "make test" and press enter to run the test suite

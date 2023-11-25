@@ -5,6 +5,9 @@ type user = {
   college : string;
 }
 
+let make_user netid password college =
+  { netid; password; total_credits = 0.0; college }
+
 let users =
   [
     {
@@ -24,11 +27,7 @@ let users =
 let authenticate netid password =
   List.exists (fun user -> user.netid = netid && user.password = password) users
 
-let set_total_credits credits user = user.total_credits <- credits 
-
-let get_netid user = user.netid 
-
-let get_total_credits user = user.total_credits 
-
+let set_total_credits credits user = user.total_credits <- credits
+let get_netid user = user.netid
+let get_total_credits user = user.total_credits
 let get_college user = user.college
-

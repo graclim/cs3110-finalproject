@@ -1,4 +1,4 @@
-(lang dune 3.10)
+(lang dune 3.11)
 (name Course_Scheduler)
 (sections (lib .) (libexec .) (doc ../../doc/Course_Scheduler))
 (files
@@ -15,10 +15,6 @@
    course_scheduler__Courses.cmt
    course_scheduler__Courses.cmti
    course_scheduler__Courses.cmx
-   course_scheduler__Interface.cmi
-   course_scheduler__Interface.cmt
-   course_scheduler__Interface.cmti
-   course_scheduler__Interface.cmx
    course_scheduler__Scheduler.cmi
    course_scheduler__Scheduler.cmt
    course_scheduler__Scheduler.cmti
@@ -30,8 +26,6 @@
    courses.ml
    courses.mli
    dune-package
-   interface.ml
-   interface.mli
    opam
    scheduler.ml
    scheduler.mli
@@ -65,13 +59,6 @@
        (path Courses)
        (intf (path courses.mli))
        (impl (path courses.ml))))
-     (module
-      (obj_name course_scheduler__Interface)
-      (visibility public)
-      (source
-       (path Interface)
-       (intf (path interface.mli))
-       (impl (path interface.ml))))
      (module
       (obj_name course_scheduler__Scheduler)
       (visibility public)
