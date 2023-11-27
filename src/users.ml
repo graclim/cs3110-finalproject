@@ -8,6 +8,8 @@ type user = {
 let make_user netid password college =
   { netid; password; total_credits = 0.0; college }
 
+let add_user new_user users_list = new_user :: users_list
+
 let users =
   [
     {
@@ -23,6 +25,9 @@ let users =
       college = "arts and sciences";
     };
   ]
+
+let get_users () = users
+let change_college new_college user = { user with college = new_college }
 
 let authenticate netid password =
   List.exists (fun user -> user.netid = netid && user.password = password) users

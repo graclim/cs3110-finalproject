@@ -3,6 +3,7 @@ INSTALLATION AND USAGE GUIDE
 Prerequisites to run the program:
 - Make sure that you have OCaml installed on your computer.
 - Make sure that you have utop installed on your computer.
+- Make sure that you have Yojson installed on your computer
 
 How to run the program:
 - Open terminal or the command prompt window.

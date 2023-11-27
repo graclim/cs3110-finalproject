@@ -1,9 +1,0 @@
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Start test Course Scheduler Tests:1:test_course_creation1.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Test Course Scheduler Tests:1:test_course_creation1 is successful.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: End test Course Scheduler Tests:1:test_course_creation1.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Start test Course Scheduler Tests:3:test_is_conflict.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Test Course Scheduler Tests:3:test_is_conflict is successful.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: End test Course Scheduler Tests:3:test_is_conflict.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Start test Course Scheduler Tests:4:test_has_schedule_conflict.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: Test Course Scheduler Tests:4:test_has_schedule_conflict is successful.
-2023-11-20T00:29:38+00:00 dhcp-vl2041-29715.eduroam.cornell.edu#02 I: End test Course Scheduler Tests:4:test_has_schedule_conflict.

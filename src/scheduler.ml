@@ -51,7 +51,6 @@ let add_course_ID netid course_id =
       print_endline ("Added course: " ^ get_course_name course_to_add)
   with Not_found -> print_endline "Course not found."
 
-
 (* User can add a course by name *)
 let add_course_name netid course_name =
   try
@@ -124,4 +123,3 @@ let display_my_courses () =
   in
   print_endline "My courses:";
   print_my_courses !my_courses
-
