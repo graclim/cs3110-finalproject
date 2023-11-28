@@ -19,3 +19,10 @@ How to run the test cases:
 - Open terminal or the command prompt window.
 - Navigate to the directory where this project is saved
 - Type in "make test" and press enter to run the test suite
+
+How to extract HTML file containing documentation from interface files
+- Open terminal or the command prompt window.
+- Navigate to the directory where this project is saved
+- Type in "make docs" and press enter
+- Type in "make open-docs" and press enter. This should direct you to a folder
+  containing and index.html file, which has all the documentation
