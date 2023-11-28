@@ -23,6 +23,9 @@ val make_course : int -> string -> string -> float -> schedule -> course
 (** [make_course id name desc credits schedule] creates a new [course] record
     with the given id, name, description, credits, and schedule. *)
 
+val to_time : Yojson.Basic.t -> time
+(** [to_time json] converts a JSON representation to the time type. *)
+    
 val get_course_id : course -> int
 (** [get_course_id c] returns the ID of the given course [c]. *)
 
@@ -50,17 +53,14 @@ val get_start_time : time -> int
 val get_finish_time : time -> int
 (** [get_finish_time t] returns the finish time of the given time [t]. *)
 
-val get_cs_courses : unit -> course list
-(** [get_cs_courses ()] returns a list of all computer science courses. *)
-
-val to_time : Yojson.Basic.t -> time
-(** [to_time json] converts a JSON representation to the time type. *)
-
 val to_schedule : Yojson.Basic.t -> schedule
 (** [to_schedule json] converts a JSON representation to the schedule type. *)
 
 val cs_courses : course list
 (** List of computer science courses loaded from JSON *)
+
+val get_cs_courses : unit -> course list
+(** [get_cs_courses ()] returns a list of all computer science courses. *)
 
 val display_courses : unit -> unit
 (** [display_courses ()] prints out a list of all available computer science

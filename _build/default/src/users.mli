@@ -19,14 +19,14 @@ val change_college : string -> user -> user
 (** Authenticate a user by netid and password *)
 val authenticate : string -> string -> bool
 
-(**Change the user's total credits*)
+(** Change the user's total credits *)
 val set_total_credits : float -> user -> unit 
 
-(*Get the user's netid*)
+(* Get the user's netid *)
 val get_netid : user -> string
 
-(*Get the user's total credits*)
+(* Get the user's total credits *)
 val get_total_credits : user -> float
 
-(*Get the user's college*)
+(* Get the user's college *)
 val get_college : user -> string 
