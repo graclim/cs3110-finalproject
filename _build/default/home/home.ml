@@ -17,6 +17,7 @@ let rec main netid =
     print_endline "7: Display total credits";
     print_endline "0: Exit";
     print_string "Enter your choice: ";
+    try 
     match read_int () with
     | 1 ->
         print_endline "";
@@ -57,6 +58,10 @@ let rec main netid =
     | _ ->
         print_endline "";
         print_endline "Invalid option";
+        interface netid 
+    with Failure msg -> 
+        print_endline "";
+        print_endline "Invalid option"; 
         interface netid 
     in 
     interface netid;

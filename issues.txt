@@ -1,0 +1,4 @@
+
+1. Need cleaner display for display all my courses 
+2. adding courses with conflicts should not update total credits
+3. credit limit should not surpass the ones set by the college 

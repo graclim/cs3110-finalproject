@@ -74,15 +74,15 @@ let display_courses () =
     | [] -> ()
     | course :: rest_of_courses ->
         Printf.printf
-          "ID: %3d | Name: %-20s | Description: %-40s | Credits: %.1f\n"
+          "ID: %3d | Name: %-20s | Description: %-70s | Credits: %.1f\n"
           course.id course.name course.description course.credits;
         print_courses rest_of_courses
   in
-  Printf.printf "\n%-3s | %-30s | %-40s | %s\n" "ID" "Name" "Description"
+  Printf.printf "\n%-3s | %-30s | %-83s | %s\n" "ID" "Name" "Description"
     "Credits";
-  Printf.printf "%s\n" (String.make 90 '-');
+  Printf.printf "%s\n" (String.make 180 '-');
   print_courses cs_courses;
-  Printf.printf "%s\n" (String.make 90 '-');
+  Printf.printf "%s\n" (String.make 180 '-');
   print_endline ""
 
 (* Calculates total number of credits a student is planning on taking *)
