@@ -1,12 +1,12 @@
 open Yojson
 
-type time 
+type time
 (** Type representing time with a start and finish as integers *)
 
-type schedule 
+type schedule
 (** Type representing a schedule with a list of days and a time *)
 
-type course 
+type course
 (** Type representing a course with an id, name, description, credits, and
     schedule *)
 
@@ -24,7 +24,7 @@ val make_course : int -> string -> string -> float -> schedule -> course
 
 val to_time : Yojson.Basic.t -> time
 (** [to_time json] converts a JSON representation to the time type. *)
-    
+
 val get_course_id : course -> int
 (** [get_course_id c] returns the ID of the given course [c]. *)
 

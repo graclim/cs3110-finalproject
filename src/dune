@@ -1,5 +1,4 @@
-(library 
+(library
  (name course_scheduler)
  (public_name Course_Scheduler)
- (libraries yojson)
-)
+ (libraries yojson))
