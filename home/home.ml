@@ -67,6 +67,7 @@ let rec main netid =
   interface netid;
   update_json netid
 
+
 (* User login interface *)
 let rec login () =
   print_endline "Please enter your netid:";
@@ -82,6 +83,39 @@ let rec login () =
     print_endline "";
     login ())
 
+
+let rec create_user () = 
+    try 
+        print_endline "Please enter your netid:";
+        let netid :string =  read_line () in  
+        print_endline "Please enter your password:";
+        let password : string = read_line () in
+        print_endline "Please enter your college:";
+        print_endline "0: College of Engineering";
+        print_endline "1: College of Arts & Sciences";
+        let college_num : int = read_int () in
+        let college = if college_num = 0 then "engineering" else "arts and sciences" in  
+        add_user_to_json_file netid password college; 
+        login () 
+    with Failure msg -> print_endline "Netid already exists; try again"; create_user ()
+
+let rec login_or_create_user () = 
+    print_endline "Create User or Login";
+    print_endline "0: Login";
+    print_endline "1: Create User";
+    try 
+        match read_int () with 
+        | 0 -> 
+            login ()
+        | 1 -> 
+            create_user ()
+        | _ -> 
+            print_endline "Not an option; try again";
+            login_or_create_user ()
+    with Failure msg -> 
+        print_endline "Not an option; try again";
+        login_or_create_user ()  
+
 (* Start the application with the login process *)
 let _ = print_all_users load_users_from_json
-let () = login ()
+let () = login_or_create_user ()

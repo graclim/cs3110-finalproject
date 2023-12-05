@@ -95,3 +95,4 @@ let get_credit_limit college =
   | "engineering" -> 20.0
   | "arts and sciences" -> 22.0
   | _ -> failwith "Unknown college"
+

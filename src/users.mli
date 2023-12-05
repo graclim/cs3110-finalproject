@@ -49,3 +49,7 @@ val get_courses : user -> course list
 val display_total_credits : string -> unit
 (** [display_total_credits netid] prints out the total number of credits for a
     student based on netid. *)
+
+
+val add_user_to_json_file : string -> string -> string -> unit
+

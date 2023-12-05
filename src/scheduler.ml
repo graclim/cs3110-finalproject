@@ -4,15 +4,15 @@ open Users
 (* A mutable list representing the user's courses *)
 let my_courses = ref []
 
-let rec find_user_courses users netid =
-  match users with
-  | user :: t ->
-      if get_netid user = netid then get_courses user
-      else find_user_courses t netid
-  | [] -> failwith "User does not exist"
 
 (*load the courses in by netid into my_courses*)
 let load_courses netid =
+  let rec find_user_courses users netid =
+    match users with
+    | user :: t ->
+        if get_netid user = netid then get_courses user
+        else find_user_courses t netid
+    | [] -> failwith "User does not exist" in 
   let users_list = load_users_from_json in
   my_courses := find_user_courses users_list netid
 
