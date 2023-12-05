@@ -1,15 +1,15 @@
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:2:test_authenticate_wrong_password.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:2:test_authenticate_wrong_password is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:2:test_authenticate_wrong_password.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:10:test_course_schedule_time_finish_1.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:10:test_course_schedule_time_finish_1 is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:10:test_course_schedule_time_finish_1.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:18:test_courses_1_and_2_conflict.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:18:test_courses_1_and_2_conflict is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:18:test_courses_1_and_2_conflict.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:28:test_no_overlap_same_day.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:28:test_no_overlap_same_day is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:28:test_no_overlap_same_day.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:36:test_add_and_get_users.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:36:test_add_and_get_users is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:36:test_add_and_get_users.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:2:test_authenticate_wrong_password.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:2:test_authenticate_wrong_password is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:2:test_authenticate_wrong_password.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:10:test_course_schedule_time_finish_1.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:10:test_course_schedule_time_finish_1 is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:10:test_course_schedule_time_finish_1.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:17:test_another_course_schedule_time_finish.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:17:test_another_course_schedule_time_finish is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:17:test_another_course_schedule_time_finish.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:26:test_complete_overlap_same_day.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:26:test_complete_overlap_same_day is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:26:test_complete_overlap_same_day.
+2023-12-05T02:59:06+00:00 jerryinspiron#03 I: Start test Course Scheduler Tests:33:test_get_college_arts.
+2023-12-05T02:59:06+00:00 jerryinspiron#03 I: Test Course Scheduler Tests:33:test_get_college_arts is successful.
+2023-12-05T02:59:06+00:00 jerryinspiron#03 I: End test Course Scheduler Tests:33:test_get_college_arts.

@@ -2,9 +2,25 @@
   {
     "netid": "user1",
     "password": "pass1",
-    "total_credits": 13.0,
+    "total_credits": 11.5,
     "college": "engineering",
     "courses": [
+      {
+        "id": 3,
+        "name": "CS1132",
+        "description": "Short Course in MATLAB",
+        "credits": 1.5,
+        "schedule": {
+          "days": [
+            "Tuesday",
+            "Thursday"
+          ],
+          "time": {
+            "start": 540,
+            "finish": 615
+          }
+        }
+      },
       {
         "id": 2,
         "name": "CS1112",
@@ -51,22 +67,6 @@
           "time": {
             "start": 0,
             "finish": 1
-          }
-        }
-      },
-      {
-        "id": 22,
-        "name": "CS4700",
-        "description": "Foundations of Artificial Intelligence",
-        "credits": 3.0,
-        "schedule": {
-          "days": [
-            "Tuesday",
-            "Thursday"
-          ],
-          "time": {
-            "start": 900,
-            "finish": 975
           }
         }
       }

@@ -18,47 +18,47 @@ let rec main netid =
     print_endline "0: Exit";
     print_string "Enter your choice: ";
     try 
-    match read_int () with
-    | 1 ->
-        print_endline "";
-        display_courses ();
-        interface netid
-    | 2 ->
-        print_endline "";
-        display_my_courses ();
-        interface netid
-    | 3 ->
-        print_endline "";
-        print_string "Enter course ID to add: ";
-        add_course_ID netid (read_int ());
-        interface netid
-    | 4 ->
-        print_endline "";
-        print_string "Enter course ID to drop: ";
-        (*NEED TO ADD A TRY EXCEPTION CLAUSE FOR READ_LINE*)
-        drop_course_ID netid (int_of_string (read_line ()));
-        interface netid
-    | 5 ->
-        print_endline "";
-        print_string "Enter course name to add: ";
-        add_course_name netid (read_line ());
-        interface netid
-    | 6 ->
-        print_endline "";
-        print_string "Enter course ID to drop: ";
-        drop_course_name netid (read_line ());
-        interface netid
-    | 7 ->
-        print_endline "";
-        display_total_credits netid;
-        interface netid
-    | 0 ->
-        print_endline "";
-        print_endline "Bye!"
-    | _ ->
-        print_endline "";
-        print_endline "Invalid option";
-        interface netid 
+        match read_int () with
+        | 1 ->
+            print_endline "";
+            display_courses ();
+            interface netid
+        | 2 ->
+            print_endline "";
+            display_my_courses ();
+            interface netid
+        | 3 ->
+            print_endline "";
+            print_string "Enter course ID to add: ";
+            add_course_ID netid (read_int ());
+            interface netid
+        | 4 ->
+            print_endline "";
+            print_string "Enter course ID to drop: ";
+            (*NEED TO ADD A TRY EXCEPTION CLAUSE FOR READ_LINE*)
+            drop_course_ID netid (int_of_string (read_line ()));
+            interface netid
+        | 5 ->
+            print_endline "";
+            print_string "Enter course name to add: ";
+            add_course_name netid (read_line ());
+            interface netid
+        | 6 ->
+            print_endline "";
+            print_string "Enter course ID to drop: ";
+            drop_course_name netid (read_line ());
+            interface netid
+        | 7 ->
+            print_endline "";
+            display_total_credits netid;
+            interface netid
+        | 0 ->
+            print_endline "";
+            print_endline "Bye!"
+        | _ ->
+            print_endline "";
+            print_endline "Invalid option";
+            interface netid 
     with Failure msg -> 
         print_endline "";
         print_endline "Invalid option"; 

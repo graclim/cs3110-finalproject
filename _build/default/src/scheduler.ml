@@ -62,10 +62,11 @@ let add_course_ID netid course_id =
       print_endline
         "Cannot add course: there is a schedule conflict with a course you're \
          already enrolled in."
-    else 
+    else begin 
       my_courses := course_to_add :: !my_courses;
       set_total_credits ((get_total_credits user) +. get_course_credits course_to_add) user;
       print_endline ("Added course: " ^ get_course_name course_to_add)
+    end 
   with Not_found -> print_endline "Course not found."
 
 (* User can add a course by name *)
@@ -89,9 +90,11 @@ let add_course_name netid course_name =
         "Cannot add course: there is a schedule conflict with an existing \
          course."
     else 
+      begin 
       my_courses := course_to_add :: !my_courses;
       Users.set_total_credits ((Users.get_total_credits user) +. get_course_credits course_to_add) user;
       print_endline ("Added course: " ^ get_course_name course_to_add)
+      end 
   with
   | Not_found -> print_endline "Course not found."
   | e -> print_endline ("An unexpected error occurred: " ^ Printexc.to_string e)

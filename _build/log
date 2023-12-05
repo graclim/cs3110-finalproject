@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: /mnt/d/Computer_Science/cs3110/cs3110-finalproject
 # Auto-detected concurrency: 16
-$ /home/jerry/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_52478d_output
+$ /home/jerry/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_37d318_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -115,7 +115,3 @@ $ /home/jerry/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_52478d_outp
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl src/courses.ml) > _build/default/src/.course_scheduler.objs/course_scheduler__Courses.impl.d
-$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -I /home/jerry/.opam/cs3110-2023fa/lib/seq -I /home/jerry/.opam/cs3110-2023fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/native/course_scheduler__Courses.cmx -c -impl src/courses.ml)
-$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -a -o src/course_scheduler.cmxa src/.course_scheduler.objs/native/course_scheduler.cmx src/.course_scheduler.objs/native/course_scheduler__Courses.cmx src/.course_scheduler.objs/native/course_scheduler__Users.cmx src/.course_scheduler.objs/native/course_scheduler__Scheduler.cmx)
-$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -o home/home.exe /home/jerry/.opam/cs3110-2023fa/lib/ocaml/unix/unix.cmxa /home/jerry/.opam/cs3110-2023fa/lib/stdlib-shims/stdlib_shims.cmxa /home/jerry/.opam/cs3110-2023fa/lib/ounit2/advanced/oUnitAdvanced.cmxa /home/jerry/.opam/cs3110-2023fa/lib/ounit2/oUnit.cmxa /home/jerry/.opam/cs3110-2023fa/lib/yojson/yojson.cmxa src/course_scheduler.cmxa home/.home.eobjs/native/dune__exe__Home.cmx)

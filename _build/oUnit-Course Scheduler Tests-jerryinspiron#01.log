@@ -1,15 +1,12 @@
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:0:test_authenticate_successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:0:test_authenticate_successful is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:0:test_authenticate_successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:12:test_another_course_name.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:12:test_another_course_name is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:12:test_another_course_name.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:16:test_another_course_schedule_time_start.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:16:test_another_course_schedule_time_start is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:16:test_another_course_schedule_time_start.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:29:test_set_total_credits.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:29:test_set_total_credits is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:29:test_set_total_credits.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:35:test_get_users.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:35:test_get_users is successful.
-2023-12-05T02:03:19+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:35:test_get_users.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:0:test_authenticate_successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:0:test_authenticate_successful is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:0:test_authenticate_successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:12:test_another_course_name.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:12:test_another_course_name is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:12:test_another_course_name.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:20:test_courses_3_and_4_conflict.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:20:test_courses_3_and_4_conflict is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:20:test_courses_3_and_4_conflict.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Start test Course Scheduler Tests:29:test_set_total_credits.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: Test Course Scheduler Tests:29:test_set_total_credits is successful.
+2023-12-05T02:59:05+00:00 jerryinspiron#01 I: End test Course Scheduler Tests:29:test_set_total_credits.
