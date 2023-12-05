@@ -13,6 +13,9 @@ val is_conflict : schedule -> schedule -> bool
 val has_schedule_conflict : course -> course list -> bool
 (** Check if a new course conflicts with the existing schedule *)
 
+val find_schedule_conflict : course -> course list -> (string * string) option
+(** Find the first course in the list that conflicts with the new course *)
+
 val add_course_ID : string -> int -> unit
 (** Add a course by ID *)
 

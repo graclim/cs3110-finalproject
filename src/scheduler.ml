@@ -32,6 +32,28 @@ let is_conflict (s1 : schedule) (s2 : schedule) : bool =
   shared_days <> []
   && not (s1_time_finish <= s2_time_start || s2_time_finish <= s1_time_start)
 
+(* A function to check if two schedules conflict and return a string describing
+   the conflict *)
+let describe_conflict (s1 : schedule) (s2 : schedule) : string option =
+  let s1_days = get_schedule_days s1 in
+  let s2_days = get_schedule_days s2 in
+  let shared_days = List.filter (fun day -> List.mem day s2_days) s1_days in
+  if shared_days = [] then None
+  else
+    let s1_time = get_schedule_time s1 in
+    let s2_time = get_schedule_time s2 in
+    let s1_time_finish = get_finish_time s1_time in
+    let s1_time_start = get_start_time s1_time in
+    let s2_time_finish = get_finish_time s2_time in
+    let s2_time_start = get_start_time s2_time in
+    if s1_time_finish <= s2_time_start || s2_time_finish <= s1_time_start then
+      None
+    else
+      Some
+        (Printf.sprintf "Conflicts on %s during %d-%d with %d-%d"
+           (String.concat ", " shared_days)
+           s1_time_start s1_time_finish s2_time_start s2_time_finish)
+
 (* A function to check if a new course conflicts with existing courses *)
 let has_schedule_conflict new_course my_courses =
   List.exists
@@ -39,6 +61,20 @@ let has_schedule_conflict new_course my_courses =
       is_conflict
         (get_course_schedule existing_course)
         (get_course_schedule new_course))
+    my_courses
+
+(* A function to check if a new course conflicts with existing courses and
+   return a string describing the conflict *)
+let find_schedule_conflict new_course my_courses =
+  List.find_map
+    (fun existing_course ->
+      match
+        describe_conflict
+          (get_course_schedule existing_course)
+          (get_course_schedule new_course)
+      with
+      | Some description -> Some (get_course_name existing_course, description)
+      | None -> None)
     my_courses
 
 (* User can add a course by ID *)
@@ -56,17 +92,17 @@ let add_course_ID netid course_id =
     then print_endline "Cannot add course: credit limit exceeded."
     else if List.exists (fun c -> get_course_id c = course_id) !my_courses then
       print_endline "You are already enrolled in this course."
-    else if has_schedule_conflict course_to_add !my_courses then
-      print_endline
-        "Cannot add course: there is a schedule conflict with a course you're \
-         already enrolled in."
-    else begin
-      my_courses := course_to_add :: !my_courses;
-      set_total_credits
-        (get_total_credits user +. get_course_credits course_to_add)
-        user;
-      print_endline ("Added course: " ^ get_course_name course_to_add)
-    end
+    else
+      match find_schedule_conflict course_to_add !my_courses with
+      | Some (conflicting_course_name, conflict_description) ->
+          Printf.printf "Cannot add course: Schedule conflict with %s - %s\n"
+            conflicting_course_name conflict_description
+      | None ->
+          my_courses := course_to_add :: !my_courses;
+          set_total_credits
+            (get_total_credits user +. get_course_credits course_to_add)
+            user;
+          print_endline ("Added course: " ^ get_course_name course_to_add)
   with Not_found -> print_endline "Course not found."
 
 (* User can add a course by name *)
