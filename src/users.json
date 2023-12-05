@@ -1,7 +1,7 @@
 [{
   "netid" : "user1",
   "password" : "pass1",
-  "total_credits" : 0.0,
+  "total_credits" : 5.0,
   "college" : "engineering",
   "courses" : [{
     "id": 21,
@@ -33,7 +33,7 @@
 {
   "netid" : "user2",
   "password" : "pass2",
-  "total_credits" : 0.0,
+  "total_credits" : 5.0,
   "college" : "arts and sciences",
   "courses": [{
     "id": 21,

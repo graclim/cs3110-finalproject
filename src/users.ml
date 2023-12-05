@@ -14,6 +14,7 @@ let make_user netid password college =
 
 let add_user new_user users_list = new_user :: users_list
 
+(*helper*)
 let rec load_courses courses_json =
   List.map (fun course_json ->
     let id = Util.to_int (Util.member "id" course_json) in
@@ -48,51 +49,6 @@ let load_users_from_json =
     { netid; password; total_credits; college; courses = user_courses }
   ) users_json
 
-(* let load_users_from_json = 
-  let json_string = Yojson.Basic.from_file "users.json" in
-  let users_json = Yojson.Basic.Util.to_list json_string in
-  List.map (fun user_json ->
-    let user_courses  =
-      let json_courses= Yojson.Basic.Util.member "courses" user_json in 
-      let courses_json = Yojson.Basic.Util.to_list json_courses in
-      List.map (fun course_json ->
-        let schedule_json = Yojson.Basic.Util.member "schedule" course_json in 
-        let days_list = Yojson.Basic.Util.member "days" schedule_json in days_list in 
-        let days = 
-          match days_list with
-          | `List json_days ->
-              let ocaml_days =
-                Yojson.Basic.Util.to_list json_days
-                |> List.map Yojson.Basic.Util.to_string
-              (* Now 'ocaml_days' is an OCaml list of strings *)
-              (* Use 'ocaml_days' as needed *)
-          | _ -> failwith "Expected a JSON list for 'days'" 
-        in days
-        (* let days = Yojson.Basic.Util.to_list schedule_json |> List.map Yojson.Basic.Util.to_string in days *)
-        (* let time_json = Yojson.Basic.Util.member "time" schedule_json in
-        let start = Yojson.Basic.Util.to_int (Yojson.Basic.Util.member "start" time_json) in
-        let finish = Yojson.Basic.Util.to_int (Yojson.Basic.Util.member "finish" time_json) in
-        let time = make_time start finish in
-        let course_schedule : schedule = make_schedule days time in
-        let id = Yojson.Basic.Util.to_int (Yojson.Basic.Util.member "id" course_json) in
-        let name = Yojson.Basic.Util.to_string (Yojson.Basic.Util.member "name" course_json) in
-        let description = Yojson.Basic.Util.to_string (Yojson.Basic.Util.member "description" course_json) in
-        let credits = Yojson.Basic.Util.to_float (Yojson.Basic.Util.member "credits" course_json) in
-        let course = make_course id name description credits course_schedule in  
-        course  *)
-      ) 
-      courses_json
-    in 
-    {
-      netid = Yojson.Basic.Util.to_string (Yojson.Basic.Util.member "netid" user_json);
-      password = Yojson.Basic.Util.to_string (Yojson.Basic.Util.member "password" user_json);
-      total_credits = Yojson.Basic.Util.to_float (Yojson.Basic.Util.member "total_credits" user_json);
-      college = Yojson.Basic.Util.to_string (Yojson.Basic.Util.member "college" user_json);
-      courses = []; 
-    }
-  ) users_json *)
-
-
 let print_all_users l =  
   let print_user user=
     Printf.printf "NetID: %s\n" user.netid;
@@ -111,6 +67,55 @@ let users =
 
 let get_users () = users
 
+
+(* Function to convert a single user to Yojson *)
+let user_to_json user =
+  `Assoc [
+    "netid", `String user.netid;
+    "password", `String user.password;
+    "total_credits", `Float user.total_credits;
+    "college", `String user.college;
+    (* Convert courses list to Yojson representation *)
+    "courses", `List (List.map (fun course -> (* Convert each course to Yojson *)
+      (* Implement conversion logic for courses if needed *)
+      `Assoc [
+        "id", `Int (get_course_id course);
+        "name", `String (get_course_name course);
+        "description", `String (get_course_description course);
+        "credits", `Float (get_course_credits course); 
+        "schedule", `Assoc [
+          "days", `List ((List.map (fun day -> `String day) (get_schedule_days (get_course_schedule course))));
+          "time", `Assoc [
+            "start", `Int (get_start_time (get_schedule_time (get_course_schedule course)));
+            "finish", `Int (get_finish_time (get_schedule_time (get_course_schedule course)));
+          ]
+        ]
+
+        (* Add other course fields as needed *)
+      ]
+    ) user.courses)
+  ]
+
+(*update user courses*)
+let update_user_courses courses netid =
+  let rec find_user users netid = 
+    match users with 
+    | u :: t -> if u.netid = netid then u else find_user t netid 
+    | [] -> failwith "user not found" in 
+  let rec total_credits l = 
+    match l with 
+    | course :: t -> get_course_credits course +. total_credits t 
+    | [] -> 0.0 
+  in
+  let user = find_user users netid in
+  user.courses <- courses;
+  user.total_credits <- total_credits courses; 
+  let users_json = `List (List.map user_to_json users) in 
+  let oc = open_out "users.json" in 
+  output_string  oc (to_string users_json);
+  close_out oc
+
+
 let change_college new_college user = { user with college = new_college }
 
 let authenticate netid password =
@@ -120,6 +125,7 @@ let set_total_credits credits user = user.total_credits <- credits
 let get_netid user = user.netid
 let get_total_credits user = user.total_credits
 let get_college user = user.college
+let get_courses user = user.courses 
 
 
 (* Prints out total number of credits a student is planning on taking *)

@@ -13,6 +13,9 @@ val add_user : user -> user list -> user list
 (** Hard-coded list of users *)
 val users : user list
 
+(*update user courses and credits and write to json*)
+val update_user_courses : course list -> string -> unit
+
 (*Load current users into a list of users*)
 val load_users_from_json : user list
 
@@ -38,7 +41,10 @@ val get_netid : user -> string
 val get_total_credits : user -> float
 
 (* Get the user's college *)
-val get_college : user -> string 
+val get_college : user -> string
+
+(* Get the user's courses*)
+val get_courses : user -> course list 
 
 val display_total_credits : string -> unit
 (** [display_total_credits netid] prints out the total number of credits for a

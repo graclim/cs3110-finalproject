@@ -1,6 +1,9 @@
 open Courses
 open Users
 
+(*load the user courses based on net id*)
+val load_courses: string -> unit
+
 (** Mutable list representing the user's current courses *)
 val my_courses : course list ref
 
@@ -24,3 +27,6 @@ val drop_course_name : string -> string -> unit
 
 (** Display courses that the user is currently enrolled in *)
 val display_my_courses : unit -> unit
+
+(*update the json for the user based on his courses*)
+val update_json : string -> unit

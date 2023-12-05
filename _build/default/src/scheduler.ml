@@ -4,6 +4,23 @@ open Users
 (* A mutable list representing the user's courses *)
 let my_courses = ref []
 
+
+let rec find_user_courses users netid = 
+  match users with 
+  | user :: t -> 
+    if get_netid user = netid then 
+      get_courses user 
+    else 
+      find_user_courses t netid
+  | [] -> failwith "User does not exist"
+
+
+(*load the courses in by netid into my_courses*)
+let load_courses netid = 
+  let users_list = load_users_from_json 
+  in my_courses := find_user_courses users_list netid
+
+
 (* A function to check if two schedules conflict *)
 let is_conflict (s1 : schedule) (s2 : schedule) : bool =
   let s1_days = get_schedule_days s1 in 
@@ -123,3 +140,6 @@ let display_my_courses () =
   in
   print_endline "My courses:";
   print_my_courses !my_courses
+
+let update_json netid = 
+  update_user_courses (!my_courses) netid  
