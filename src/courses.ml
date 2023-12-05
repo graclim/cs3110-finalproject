@@ -1,4 +1,5 @@
 open Yojson
+open Unix
 
 type time = {
   start : int;
@@ -74,24 +75,37 @@ let yellow = "\027[33m"
 let blue = "\027[34m"
 let reset = "\027[0m"
 
+(* Function to get the width of the terminal *)
+let get_terminal_width () =
+  try
+    let in_channel = Unix.open_process_in "tput cols" in
+    let width = int_of_string (input_line in_channel) in
+    let _ = Unix.close_process_in in_channel in
+    width
+  with _ -> 80 (* Default width if tput cols fails *)
+
 (* Displays all available CS courses with colored output *)
 let display_courses () =
+  let terminal_width = get_terminal_width () in
+  let divider = String.make terminal_width '-' in
+
   let rec print_courses course_list =
     match course_list with
     | [] -> ()
     | course :: rest_of_courses ->
         Printf.printf
-          "%sID: %3d%s | %sName: %-20s%s | %sCredits: %.1f%s | %sDescription: \
-           %-70s%s\n"
+          "%sID: %3d%s | %sName: %-20s%s | %sCredits: %-7.1f%s | \
+           %sDescription: %-50s%s\n"
           red course.id reset green course.name reset yellow course.credits
           reset blue course.description reset;
         print_courses rest_of_courses
   in
-  Printf.printf "\n%s%-3s%s | %s%-30s%s | %s%-7s%s | %s%-83s%s\n" red "ID" reset
+
+  Printf.printf "\n%s%-3s%s | %s%-20s%s | %s%-7s%s | %s%-50s%s\n" red "ID" reset
     green "Name" reset yellow "Credits" reset blue "Description" reset;
-  Printf.printf "%s\n" (String.make 180 '-');
+  Printf.printf "%s\n" divider;
   print_courses cs_courses;
-  Printf.printf "%s\n" (String.make 180 '-');
+  Printf.printf "%s\n" divider;
   print_endline ""
 
 (* Calculates total number of credits a student is planning on taking *)
