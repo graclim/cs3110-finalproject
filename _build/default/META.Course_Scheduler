@@ -1,0 +1,6 @@
+description = ""
+requires = "yojson"
+archive(byte) = "course_scheduler.cma"
+archive(native) = "course_scheduler.cmxa"
+plugin(byte) = "course_scheduler.cma"
+plugin(native) = "course_scheduler.cmxs"

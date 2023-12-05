@@ -1,9 +1,9 @@
 # dune exec test/test.exe
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /Users/gracelim/Desktop/cs3110-finalproject
-# Auto-detected concurrency: 8
-$ /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/v6/n2jx71jn09sfynkp1_fqsqxh0000gn/T/dune_befb95_output
+# Workspace root: /mnt/d/Computer_Science/cs3110/cs3110-finalproject
+# Auto-detected concurrency: 16
+$ /home/jerry/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_c1551e_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -12,66 +12,78 @@ $ /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/v6/n
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = In_build_dir "default"
-#  ; ocaml_bin = External "/Users/gracelim/.opam/cs3110-2023fa/bin"
-#  ; ocaml = Ok External "/Users/gracelim/.opam/cs3110-2023fa/bin/ocaml"
-#  ; ocamlc = External "/Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt"
-#  ; ocamlopt =
-#      Ok External "/Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt"
-#  ; ocamldep =
-#      Ok External "/Users/gracelim/.opam/cs3110-2023fa/bin/ocamldep.opt"
+#  ; ocaml_bin = External "/home/jerry/.opam/cs3110-2023fa/bin"
+#  ; ocaml = Ok External "/home/jerry/.opam/cs3110-2023fa/bin/ocaml"
+#  ; ocamlc = External "/home/jerry/.opam/cs3110-2023fa/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/home/jerry/.opam/cs3110-2023fa/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/Users/gracelim/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
-#  ; installed_env =
+#      Ok External "/home/jerry/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
+#  ; env =
 #      map
-#        { "INSIDE_DUNE" :
-#            "/Users/gracelim/Desktop/cs3110-finalproject/_build/default"
+#        { "DUNE_OCAML_HARDCODED" :
+#            "/home/jerry/.opam/cs3110-2023fa/lib/ocaml:/home/jerry/.opam/cs3110-2023fa/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/home/jerry/.opam/cs3110-2023fa/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" :
+#            "/mnt/d/Computer_Science/cs3110/cs3110-finalproject"
+#        ; "INSIDE_DUNE" :
+#            "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/default"
+#        ; "OCAMLFIND_IGNORE_DUPS_IN" :
+#            "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/install/default/lib"
+#        ; "OCAMLPATH" :
+#            "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/install/default/lib"
+#        ; "OCAMLTOP_INCLUDE_PATH" :
+#            "/mnt/d/Computer_Science/cs3110/cs3110-finalproject/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_paths =
-#      [ External "/Users/gracelim/.opam/cs3110-2023fa/lib/ocaml"
-#      ; External "/Users/gracelim/.opam/cs3110-2023fa/lib"
+#      [ External "/home/jerry/.opam/cs3110-2023fa/lib/ocaml"
+#      ; External "/home/jerry/.opam/cs3110-2023fa/lib"
 #      ]
+#  ; natdynlink_supported = true
+#  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "5.0.0"
-#      ; standard_library_default =
-#          "/Users/gracelim/.opam/cs3110-2023fa/lib/ocaml"
-#      ; standard_library = "/Users/gracelim/.opam/cs3110-2023fa/lib/ocaml"
+#      ; standard_library_default = "/home/jerry/.opam/cs3110-2023fa/lib/ocaml"
+#      ; standard_library = "/home/jerry/.opam/cs3110-2023fa/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "cc"
+#      ; c_compiler = "gcc"
 #      ; ocamlc_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; ocamlopt_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; bytecomp_c_compiler =
-#          [ "cc"
+#          [ "gcc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
+#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "cc"
+#          [ "gcc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
+#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; native_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
 #      ; cc_profile = []
-#      ; architecture = "arm64"
+#      ; architecture = "amd64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "macosx"
-#      ; asm = [ "cc"; "-c"; "-Wno-trigraphs" ]
+#      ; system = "linux"
+#      ; asm = [ "as" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -82,8 +94,8 @@ $ /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/v6/n
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "aarch64-apple-darwin22.6.0"
-#      ; target = "aarch64-apple-darwin22.6.0"
+#      ; host = "x86_64-pc-linux-gnu"
+#      ; target = "x86_64-pc-linux-gnu"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -102,17 +114,8 @@ $ /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/v6/n
 #      ; supports_shared_libraries = true
 #      ; windows_unicode = false
 #      }
-#  ; instrument_with = []
 #  }
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf src/users.mli) > _build/default/src/.course_scheduler.objs/course_scheduler__Users.intf.d
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf src/courses.mli) > _build/default/src/.course_scheduler.objs/course_scheduler__Courses.intf.d
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -bin-annot -I src/.course_scheduler.objs/byte -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/byte/course_scheduler__Users.cmi -c -intf src/users.mli)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -bin-annot -I src/.course_scheduler.objs/byte -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/byte/course_scheduler__Courses.cmi -c -intf src/courses.mli)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -bin-annot -I src/.course_scheduler.objs/byte -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/byte/course_scheduler__Scheduler.cmi -c -intf src/scheduler.mli)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlc.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -bin-annot -I test/.test.eobjs/byte -I /Users/gracelim/.opam/cs3110-2023fa/lib/ocaml/unix -I /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2 -I /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2/advanced -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/stdlib-shims -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -I src/.course_scheduler.objs/byte -no-alias-deps -opaque -o test/.test.eobjs/byte/dune__exe__Test.cmi -c -intf test/test.mli)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/native/course_scheduler__Users.cmx -c -impl src/users.ml)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/native/course_scheduler__Courses.cmx -c -impl src/courses.ml)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/native/course_scheduler__Scheduler.cmx -c -impl src/scheduler.ml)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I test/.test.eobjs/byte -I test/.test.eobjs/native -I /Users/gracelim/.opam/cs3110-2023fa/lib/ocaml/unix -I /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2 -I /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2/advanced -I /Users/gracelim/.opam/cs3110-2023fa/lib/seq -I /Users/gracelim/.opam/cs3110-2023fa/lib/stdlib-shims -I /Users/gracelim/.opam/cs3110-2023fa/lib/yojson -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -intf-suffix .ml -no-alias-deps -opaque -o test/.test.eobjs/native/dune__exe__Test.cmx -c -impl test/test.ml)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -a -o src/course_scheduler.cmxa src/.course_scheduler.objs/native/course_scheduler.cmx src/.course_scheduler.objs/native/course_scheduler__Users.cmx src/.course_scheduler.objs/native/course_scheduler__Courses.cmx src/.course_scheduler.objs/native/course_scheduler__Scheduler.cmx)
-$ (cd _build/default && /Users/gracelim/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -o test/test.exe /Users/gracelim/.opam/cs3110-2023fa/lib/ocaml/unix/unix.cmxa /Users/gracelim/.opam/cs3110-2023fa/lib/stdlib-shims/stdlib_shims.cmxa /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2/advanced/oUnitAdvanced.cmxa /Users/gracelim/.opam/cs3110-2023fa/lib/ounit2/oUnit.cmxa /Users/gracelim/.opam/cs3110-2023fa/lib/yojson/yojson.cmxa src/course_scheduler.cmxa test/.test.eobjs/native/dune__exe__Test.cmx)
+$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl src/users.ml) > _build/default/src/.course_scheduler.objs/course_scheduler__Users.impl.d
+$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -I src/.course_scheduler.objs/byte -I src/.course_scheduler.objs/native -I /home/jerry/.opam/cs3110-2023fa/lib/seq -I /home/jerry/.opam/cs3110-2023fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Course_scheduler -o src/.course_scheduler.objs/native/course_scheduler__Users.cmx -c -impl src/users.ml)
+$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -a -o src/course_scheduler.cmxa src/.course_scheduler.objs/native/course_scheduler.cmx src/.course_scheduler.objs/native/course_scheduler__Courses.cmx src/.course_scheduler.objs/native/course_scheduler__Users.cmx src/.course_scheduler.objs/native/course_scheduler__Scheduler.cmx)
+$ (cd _build/default && /home/jerry/.opam/cs3110-2023fa/bin/ocamlopt.opt -w +a-4-6-7-9-27-29-30-32..42-44-45-48-50-60-66..70 -warn-error -a+31 -g -o test/test.exe /home/jerry/.opam/cs3110-2023fa/lib/ocaml/unix/unix.cmxa /home/jerry/.opam/cs3110-2023fa/lib/stdlib-shims/stdlib_shims.cmxa /home/jerry/.opam/cs3110-2023fa/lib/ounit2/advanced/oUnitAdvanced.cmxa /home/jerry/.opam/cs3110-2023fa/lib/ounit2/oUnit.cmxa /home/jerry/.opam/cs3110-2023fa/lib/yojson/yojson.cmxa src/course_scheduler.cmxa test/.test.eobjs/native/dune__exe__Test.cmx)

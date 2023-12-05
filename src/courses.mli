@@ -1,13 +1,12 @@
 open Yojson
-open Users
 
-type time
+type time 
 (** Type representing time with a start and finish as integers *)
 
-type schedule
+type schedule 
 (** Type representing a schedule with a list of days and a time *)
 
-type course
+type course 
 (** Type representing a course with an id, name, description, credits, and
     schedule *)
 
@@ -69,10 +68,6 @@ val display_courses : unit -> unit
 val total_credits : course list -> float
 (** [total_credits courses] calculates the total number of credits from a list
     of courses. *)
-
-val display_total_credits : string -> unit
-(** [display_total_credits netid] prints out the total number of credits for a
-    student based on netid. *)
 
 val get_credit_limit : string -> float
 (** [get_credit_limit college] returns the credit limit based on the college. *)

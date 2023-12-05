@@ -1,5 +1,4 @@
 open Yojson
-open Users
 
 type time = {
   start : int;
@@ -89,14 +88,6 @@ let display_courses () =
 (* Calculates total number of credits a student is planning on taking *)
 let total_credits courses =
   List.fold_left (fun acc course -> acc +. course.credits) 0.0 courses
-
-(* Prints out total number of credits a student is planning on taking *)
-let display_total_credits netid =
-  try
-    let user = List.find (fun u -> Users.get_netid u = netid) Users.users in
-    Printf.printf "Total credits for %s: %.2f\n" (Users.get_netid user)
-      (Users.get_total_credits user)
-  with Not_found -> print_endline "User not found."
 
 (* Credit limit of student based on their college *)
 let get_credit_limit college =

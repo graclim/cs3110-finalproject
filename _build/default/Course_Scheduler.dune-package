@@ -1,0 +1,73 @@
+(lang dune 3.10)
+(name Course_Scheduler)
+(sections (lib .) (libexec .) (doc ../../doc/Course_Scheduler))
+(files
+ (lib
+  (META
+   course_scheduler.a
+   course_scheduler.cma
+   course_scheduler.cmi
+   course_scheduler.cmt
+   course_scheduler.cmx
+   course_scheduler.cmxa
+   course_scheduler.ml
+   course_scheduler__Courses.cmi
+   course_scheduler__Courses.cmt
+   course_scheduler__Courses.cmti
+   course_scheduler__Courses.cmx
+   course_scheduler__Scheduler.cmi
+   course_scheduler__Scheduler.cmt
+   course_scheduler__Scheduler.cmti
+   course_scheduler__Scheduler.cmx
+   course_scheduler__Users.cmi
+   course_scheduler__Users.cmt
+   course_scheduler__Users.cmti
+   course_scheduler__Users.cmx
+   courses.ml
+   courses.mli
+   dune-package
+   opam
+   scheduler.ml
+   scheduler.mli
+   users.ml
+   users.mli))
+ (libexec (course_scheduler.cmxs))
+ (doc (README.md)))
+(library
+ (name Course_Scheduler)
+ (kind normal)
+ (archives (byte course_scheduler.cma) (native course_scheduler.cmxa))
+ (plugins (byte course_scheduler.cma) (native course_scheduler.cmxs))
+ (native_archives course_scheduler.a)
+ (requires yojson)
+ (main_module_name Course_scheduler)
+ (modes byte native)
+ (modules
+  (wrapped
+   (group
+    (alias
+     (obj_name course_scheduler)
+     (visibility public)
+     (kind alias)
+     (source (path Course_scheduler) (impl (path course_scheduler.ml-gen))))
+    (name Course_scheduler)
+    (modules
+     (module
+      (obj_name course_scheduler__Courses)
+      (visibility public)
+      (source
+       (path Courses)
+       (intf (path courses.mli))
+       (impl (path courses.ml))))
+     (module
+      (obj_name course_scheduler__Scheduler)
+      (visibility public)
+      (source
+       (path Scheduler)
+       (intf (path scheduler.mli))
+       (impl (path scheduler.ml))))
+     (module
+      (obj_name course_scheduler__Users)
+      (visibility public)
+      (source (path Users) (intf (path users.mli)) (impl (path users.ml))))))
+   (wrapped true))))

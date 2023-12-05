@@ -1,0 +1,36 @@
+lib: [
+  "_build/install/default/lib/Course_Scheduler/META"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.a"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cma"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cmi"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cmt"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cmx"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cmxa"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.ml"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Courses.cmi"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Courses.cmt"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Courses.cmti"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Courses.cmx"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Scheduler.cmi"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Scheduler.cmt"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Scheduler.cmti"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Scheduler.cmx"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Users.cmi"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Users.cmt"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Users.cmti"
+  "_build/install/default/lib/Course_Scheduler/course_scheduler__Users.cmx"
+  "_build/install/default/lib/Course_Scheduler/courses.ml"
+  "_build/install/default/lib/Course_Scheduler/courses.mli"
+  "_build/install/default/lib/Course_Scheduler/dune-package"
+  "_build/install/default/lib/Course_Scheduler/opam"
+  "_build/install/default/lib/Course_Scheduler/scheduler.ml"
+  "_build/install/default/lib/Course_Scheduler/scheduler.mli"
+  "_build/install/default/lib/Course_Scheduler/users.ml"
+  "_build/install/default/lib/Course_Scheduler/users.mli"
+]
+libexec: [
+  "_build/install/default/lib/Course_Scheduler/course_scheduler.cmxs"
+]
+doc: [
+  "_build/install/default/doc/Course_Scheduler/README.md"
+]

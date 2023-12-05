@@ -1,1 +1,1 @@
-src/users.mli:
+src/users.mli: Courses Yojson

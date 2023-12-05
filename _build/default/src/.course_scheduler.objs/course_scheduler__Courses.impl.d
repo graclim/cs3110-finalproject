@@ -1,1 +1,1 @@
-src/courses.ml: List Printf String Users Yojson
+src/courses.ml: List Printf String Yojson

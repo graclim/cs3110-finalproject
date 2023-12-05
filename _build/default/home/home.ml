@@ -73,4 +73,5 @@ let rec login () =
     login ())
 
 (* Start the application with the login process *)
+let _ = print_all_users load_users_from_json
 let () = login ()

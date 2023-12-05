@@ -1,3 +1,6 @@
+open Yojson
+open Courses
+
 (** Type representing a user with a netid, password, total_credits, and college *)
 type user
 
@@ -9,6 +12,12 @@ val add_user : user -> user list -> user list
 
 (** Hard-coded list of users *)
 val users : user list
+
+(*Load current users into a list of users*)
+val load_users_from_json : user list
+
+(*Print users*)
+val print_all_users : user list -> unit 
 
 (** Get the list of users *)
 val get_users : unit -> user list
@@ -30,3 +39,7 @@ val get_total_credits : user -> float
 
 (* Get the user's college *)
 val get_college : user -> string 
+
+val display_total_credits : string -> unit
+(** [display_total_credits netid] prints out the total number of credits for a
+    student based on netid. *)
