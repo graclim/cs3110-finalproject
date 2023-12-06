@@ -112,7 +112,6 @@ let () =
 
   (* Others *)
   add_courses_to_field "Others" [ 3; 5; 6; 15; 16; 26 ]
-(* ... You can add more fields and associated courses as needed ... *)
 
 (* Function to get the width of the terminal *)
 let get_terminal_width () =
@@ -122,7 +121,7 @@ let get_terminal_width () =
     let _ = Unix.close_process_in in_channel in
     width
   with _ -> 80 (* Default width if tput cols fails *)
-
+  
 let recommend_courses user_field =
   match Hashtbl.find_opt field_to_courses user_field with
   | Some recommended_courses -> recommended_courses
