@@ -661,7 +661,7 @@ let test_add_user_2 _ =
   assert_equal ~msg:"New user should have the correct college"
     "arts and sciences"
     (get_college (List.hd updated_users))
-    
+
 let test_recommend_courses_ml_ai _ =
   Printf.printf "=== Testing all courses in Machine Learning/AI ===\n";
   let recommended_courses = get_recommended_courses "Machine Learning/AI" in
@@ -890,6 +890,26 @@ let test_recommend_courses_others_exclude _ =
     (not any_present);
   Printf.printf "=== Test recommend_courses_others_exclude completed ===\n"
 
+(* =================== TESTING CHANGING COLLEGES =================== *)
+
+let test_change_college_to_engineering _ =
+  let initial_user = make_user "testuser1" "testpass1" "arts and sciences" in
+  let updated_user = change_college "engineering" initial_user in
+  assert_equal ~msg:"College should be changed to engineering" "engineering"
+    (get_college updated_user)
+
+let test_change_college_to_arts_and_sciences _ =
+  let initial_user = make_user "testuser2" "testpass2" "engineering" in
+  let updated_user = change_college "arts and sciences" initial_user in
+  assert_equal ~msg:"College should be changed to arts and sciences"
+    "arts and sciences" (get_college updated_user)
+
+let test_change_college_retains_other_fields _ =
+  let initial_user = make_user "testuser3" "testpass3" "engineering" in
+  let updated_user = change_college "arts and sciences" initial_user in
+  assert_equal ~msg:"NetID should remain unchanged" "testuser3"
+    (get_netid updated_user)
+
 (* =================== COMBINING ALL TEST SUITES =================== *)
 let suite =
   "Course Scheduler Tests"
@@ -982,6 +1002,13 @@ let suite =
          >:: test_recommend_courses_robotics_and_ai_exclude;
          "test_recommend_courses_others_exclude"
          >:: test_recommend_courses_others_exclude;
+         (* changing colleges *)
+         "test_change_college_to_engineering"
+         >:: test_change_college_to_engineering;
+         "test_change_college_to_arts_and_sciences"
+         >:: test_change_college_to_arts_and_sciences;
+         "test_change_college_retains_other_fields"
+         >:: test_change_college_retains_other_fields;
        ]
 
 (* Run the tests *)

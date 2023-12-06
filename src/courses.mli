@@ -61,9 +61,21 @@ val cs_courses : course list
 val get_cs_courses : unit -> course list
 (** [get_cs_courses ()] returns a list of all computer science courses. *)
 
+(* Field to courses mapping *)
+val field_to_courses : (string, course list) Hashtbl.t
+
 val get_terminal_width : unit -> int
 (** Gets the current width of the terminal. Returns the terminal width as an
     integer. If it cannot determine the width, defaults to 80. *)
+
+(* Function to recommend courses based on a given field *)
+val recommend_courses : string -> course list
+
+(* Function to get recommended courses - this is effectively an alias to recommend_courses *)
+val get_recommended_courses : string -> course list
+
+(* Function to display a list of recommended courses *)
+val display_recommended_courses : course list -> unit
 
 val display_courses : unit -> unit
 (** [display_courses ()] prints out a list of all available computer science
@@ -75,13 +87,3 @@ val total_credits : course list -> float
 
 val get_credit_limit : string -> float
 (** [get_credit_limit college] returns the credit limit based on the college. *)
-
-
-(* Function to recommend courses based on a given field *)
-val recommend_courses : string -> course list
-
-(* Function to get recommended courses - this is effectively an alias to recommend_courses *)
-val get_recommended_courses : string -> course list
-
-(* Function to display a list of recommended courses *)
-val display_recommended_courses : course list -> unit
