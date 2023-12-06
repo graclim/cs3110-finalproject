@@ -1,7 +1,13 @@
 open Yojson
 open Courses
 
-type user
+type user = {
+  netid : string;
+  password : string;
+  mutable total_credits : float;
+  college : string;
+  mutable courses : course list;
+}
 (** Type representing a user with a netid, password, total credits, college, and
     a list of courses *)
 
