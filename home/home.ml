@@ -3,7 +3,6 @@ open Yojson
 open Users
 open Courses
 open Scheduler
-open Calendar
 open Exporter
 
 (* Main user interface *)
@@ -30,8 +29,7 @@ let rec main netid =
     print_endline
       "8: Get course recommendations - Get personalized course suggestions \
        based on specific fields.";
-    print_endline "9: Display weekly calendar - View your weekly course schedule.";
-    print_endline "10: Export my schedule to calendar (.ics) file.";
+    print_endline "9: Export my schedule to calendar";
     print_endline "0: Exit - Log out of the Course Scheduler System.";
     print_endline "------------------------------------------------";
     print_string "Please enter your choice and press Enter: ";
@@ -103,11 +101,6 @@ let rec main netid =
         (* Calling the function from courses.ml *)
         interface netid
       | 9 ->
-        let user = List.find (fun u -> u.netid = netid) users in
-        draw_calendar user.courses;
-        print_endline "Weekly Calendar displayed.";
-        interface netid
-      | 10 ->
         let user = List.find (fun u -> u.netid = netid) users in
         export_user_schedule_to_ics user;
         print_endline "Schedule exported successfully.";
