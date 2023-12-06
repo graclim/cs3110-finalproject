@@ -35,7 +35,6 @@ let rec main netid =
       | 4 ->
           print_endline "";
           print_string "Enter course ID to drop: ";
-          (*NEED TO ADD A TRY EXCEPTION CLAUSE FOR READ_LINE*)
           drop_course_ID netid (int_of_string (read_line ()));
           interface netid
       | 5 ->
@@ -67,7 +66,6 @@ let rec main netid =
   interface netid;
   update_json netid
 
-
 (* User login interface *)
 let rec login () =
   print_endline "Please enter your netid:";
@@ -82,7 +80,6 @@ let rec login () =
     print_endline "Invalid netid or password.";
     print_endline "";
     login ())
-
 
 let rec create_user () = 
     try 
@@ -116,6 +113,7 @@ let rec login_or_create_user () =
         print_endline "Not an option; try again";
         login_or_create_user ()  
 
+(* let _ = print_all_users load_users_from_json *)
+
 (* Start the application with the login process *)
-let _ = print_all_users load_users_from_json
 let () = login_or_create_user ()

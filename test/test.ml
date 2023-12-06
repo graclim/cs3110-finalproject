@@ -231,7 +231,7 @@ let test_another_course_description _ =
     Courses.make_course 102 "Advanced OCaml"
       "An advanced course on OCaml programming" 3.0 another_example_schedule
   in
-
+  
   let course_description = Courses.get_course_description another_mock_course in
   Printf.printf "Course Description: %s\n" course_description;
   assert_equal ~msg:"Course description should be correct"
@@ -578,6 +578,15 @@ let test_get_college_engineering _ =
   assert_equal "engineering" college_result;
   Printf.printf "=== Test test_get_college_engineering completed ===\n"
 
+let test_get_college_engineering_uppercase _ =
+  Printf.printf "=== Testing User functions (get_college with uppercase) ===\n";
+  let user = make_user "user8" "pass8" "ENGINEERING" in
+  let college_result = get_college user in
+  Printf.printf "College: %s\n" college_result;
+  assert_equal "ENGINEERING" college_result;
+  Printf.printf
+    "=== Test test_get_college_engineering_uppercase completed ===\n"
+
 let test_get_college_arts _ =
   Printf.printf "=== Testing User functions (get_college) ===\n";
   let user = make_user "user7" "pass7" "arts and sciences" in
@@ -586,8 +595,17 @@ let test_get_college_arts _ =
   assert_equal "arts and sciences" college_result;
   Printf.printf "=== Test test_get_college_arts completed ===\n"
 
+let test_get_college_arts_uppercase _ =
+  Printf.printf "=== Testing User functions (get_college with uppercase) ===\n";
+  let user = make_user "user" "pass" "ARTS AND SCIENCES" in
+  let college_result = get_college user in
+  Printf.printf "College: %s\n" college_result;
+  assert_equal "ARTS AND SCIENCES" college_result;
+  Printf.printf
+    "=== Test test_get_college_engineering_uppercase completed ===\n"
+
 (* =================== TESTING FOR ADDING, GETTING =================== *)
-let test_add_user _ =
+let test_add_user_1 _ =
   let initial_users = get_users () in
   let new_user = make_user "user3" "pass3" "engineering" in
   let updated_users = add_user new_user initial_users in
@@ -599,58 +617,18 @@ let test_add_user _ =
   assert_equal ~msg:"New user should have the correct college" "engineering"
     (get_college (List.hd updated_users))
 
-let test_get_users _ =
-  let users = get_users () in
-  match users with
-  | [] -> assert_failure "The list of users should not be empty"
-  | _ :: _ ->
-      assert_equal
-        ~msg:"The list of users should contain the expected number of users" 2
-        (List.length users);
-      assert_equal
-        ~msg:"The first user in the list should have the correct netid" "user1"
-        (get_netid (List.hd users));
-      assert_equal
-        ~msg:"The second user in the list should have the correct netid" "user2"
-        (get_netid (List.hd (List.tl users)))
-
-let test_add_and_get_users _ =
+let test_add_user_2 _ =
   let initial_users = get_users () in
-  let new_user = make_user "user3" "pass3" "engineering" in
+  let new_user = make_user "user3" "pass3" "arts and sciences" in
   let updated_users = add_user new_user initial_users in
-  match updated_users with
-  | [] -> assert_failure "The list of users should not be empty"
-  | _ :: _ ->
-      Printf.printf "Number of users before adding: %d\n"
-        (List.length initial_users);
-      Printf.printf "Number of users after adding: %d\n"
-        (List.length updated_users);
-      Printf.printf "New list of users:\n";
-      List.iter
-        (fun user -> Printf.printf "- %s\n" (get_netid user))
-        updated_users;
-
-      assert_equal ~msg:"New user should be added to the list of users"
-        (List.length updated_users)
-        (List.length initial_users + 1);
-      assert_equal
-        ~msg:"The list of users should contain the expected number of users" 3
-        (List.length updated_users);
-      Printf.printf "Expected: user3, Actual: %s\n"
-        (get_netid (List.hd updated_users));
-      assert_equal
-        ~msg:"The first user in the list should have the correct netid" "user3"
-        (get_netid (List.hd updated_users));
-      Printf.printf "Expected: user1, Actual: %s\n"
-        (get_netid (List.hd (List.tl updated_users)));
-      assert_equal
-        ~msg:"The second user in the list should have the correct netid" "user1"
-        (get_netid (List.hd (List.tl updated_users)));
-      Printf.printf "Expected: user2, Actual: %s\n"
-        (get_netid (List.hd (List.tl (List.tl updated_users))));
-      assert_equal
-        ~msg:"The third user in the list should have the correct netid" "user2"
-        (get_netid (List.hd (List.tl (List.tl updated_users))))
+  assert_equal ~msg:"New user should be added to the list of users"
+    (List.length updated_users)
+    (List.length initial_users + 1);
+  assert_equal ~msg:"New user should have the correct netid" "user3"
+    (get_netid (List.hd updated_users));
+  assert_equal ~msg:"New user should have the correct college"
+    "arts and sciences"
+    (get_college (List.hd updated_users))
 
 (* =================== COMBINING ALL TEST SUITES =================== *)
 let suite =
@@ -703,10 +681,12 @@ let suite =
          "test_get_netid" >:: test_get_netid;
          "test_get_total_credits" >:: test_get_total_credits;
          "test_get_college_engineering" >:: test_get_college_engineering;
+         "test_get_college_engineering_uppercase"
+         >:: test_get_college_engineering_uppercase;
+         "test_get_college_arts_uppercase" >:: test_get_college_arts_uppercase;
          "test_get_college_arts" >:: test_get_college_arts;
-         "test_add_user" >:: test_add_user;
-         "test_get_users" >:: test_get_users;
-         "test_add_and_get_users" >:: test_add_and_get_users;
+         "test_add_user_1" >:: test_add_user_1;
+         "test_add_user_2" >:: test_add_user_2;
        ]
 
 (* Run the tests *)

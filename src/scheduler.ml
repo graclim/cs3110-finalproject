@@ -4,7 +4,6 @@ open Users
 (* A mutable list representing the user's courses *)
 let my_courses = ref []
 
-
 (*load the courses in by netid into my_courses*)
 let load_courses netid =
   let rec find_user_courses users netid =

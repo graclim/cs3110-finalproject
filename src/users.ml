@@ -14,7 +14,6 @@ let make_user netid password college =
 
 let add_user new_user users_list = new_user :: users_list
 
-
 let load_users_from_json =
   let rec load_courses courses_json =
     List.map
@@ -162,10 +161,9 @@ let display_total_credits netid =
       (get_total_credits user)
   with Not_found -> print_endline "User not found."
 
-
 (* Prints out total number of credits a student is planning on taking *)
 let add_user_to_json_file netid password college =
-  print_endline "Helo "; 
+  print_endline "Hello "; 
   let filename = "users.json" in
 
   let curr_users = load_users_from_json in 
@@ -182,4 +180,3 @@ let add_user_to_json_file netid password college =
     close_out oc 
   else 
     failwith "Netid already in user"
-    

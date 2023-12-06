@@ -61,6 +61,10 @@ val cs_courses : course list
 val get_cs_courses : unit -> course list
 (** [get_cs_courses ()] returns a list of all computer science courses. *)
 
+val get_terminal_width : unit -> int
+(** Gets the current width of the terminal. Returns the terminal width as an
+    integer. If it cannot determine the width, defaults to 80. *)
+
 val display_courses : unit -> unit
 (** [display_courses ()] prints out a list of all available computer science
     courses. *)
