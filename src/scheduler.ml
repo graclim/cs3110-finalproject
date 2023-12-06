@@ -11,7 +11,8 @@ let load_courses netid =
     | user :: t ->
         if get_netid user = netid then get_courses user
         else find_user_courses t netid
-    | [] -> failwith "User does not exist" in 
+    | [] -> failwith "User does not exist"
+  in
   let users_list = load_users_from_json in
   my_courses := find_user_courses users_list netid
 
@@ -140,21 +141,40 @@ let drop_course_name netid course_name =
   with Not_found ->
     print_endline "You are not enrolled in this course or user not found."
 
-(* Displays courses the user is enrolled in *)
+(* ANSI escape codes for colors *)
+let red = "\027[31m"
+let green = "\027[32m"
+let yellow = "\027[33m"
+let blue = "\027[34m"
+let reset = "\027[0m"
+
 let display_my_courses () =
+  let terminal_width = get_terminal_width () in
+  let divider = String.make terminal_width '-' in
+
+  Printf.printf "\n%s%-3s%s | %s%-30s%s | %s%-40s%s | %s%s%s\n" red "ID" reset
+    green "Name" reset blue "Description" reset yellow "Credits" reset;
+  Printf.printf "%s\n" divider;
+
   let rec print_my_courses course_list =
     match course_list with
     | [] -> ()
     | course :: rest_of_courses ->
-        let id = get_course_id course in
-        let name = get_course_name course in
-        let description = get_course_description course in
-        let credits = get_course_credits course in
-        Printf.printf "ID: %d, Name: %s, Description: %s, Credits: %.1f\n" id
-          name description credits;
+        Printf.printf
+          "%sID: %3d%s | %sName: %-20s%s | %sCredits: %-7.1f%s | \
+           %sDescription: %-50s%s\n"
+          red (get_course_id course) reset green (get_course_name course) reset
+          yellow
+          (get_course_credits course)
+          reset blue
+          (get_course_description course)
+          reset;
         print_my_courses rest_of_courses
   in
+
   print_endline "My courses:";
-  print_my_courses !my_courses
+  print_my_courses !my_courses;
+  Printf.printf "%s\n" divider;
+  print_endline ""
 
 let update_json netid = update_user_courses !my_courses netid

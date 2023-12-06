@@ -15,6 +15,7 @@ let rec main netid =
     print_endline "5: Add course by name";
     print_endline "6: Drop course by name";
     print_endline "7: Display total credits";
+    print_endline "8: Get course recommendations";
     print_endline "0: Exit";
     print_string "Enter your choice: ";
     try
@@ -30,26 +31,58 @@ let rec main netid =
       | 3 ->
           print_endline "";
           print_string "Enter course ID to add: ";
-          add_course_ID netid (read_int ());
+          let read = read_int () in
+          add_course_ID netid (read);
           interface netid
       | 4 ->
           print_endline "";
           print_string "Enter course ID to drop: ";
-          drop_course_ID netid (int_of_string (read_line ()));
+          let read = read_line () in
+          drop_course_ID netid (int_of_string (read));
           interface netid
       | 5 ->
           print_endline "";
           print_string "Enter course name to add: ";
-          add_course_name netid (read_line ());
+          let read = read_line () in
+          add_course_name netid (read);
           interface netid
       | 6 ->
           print_endline "";
           print_string "Enter course ID to drop: ";
-          drop_course_name netid (read_line ());
+          let read = read_line () in
+          drop_course_name netid (read);
           interface netid
       | 7 ->
           print_endline "";
           display_total_credits netid;
+          interface netid
+      | 8 ->
+          print_endline "";
+          print_endline "Select a field of interest for course recommendations:";
+          print_endline "1: Machine Learning/AI";
+          print_endline "2: Software Development";
+          print_endline "3: Data Science";
+          print_endline "4: Systems Programming";
+          print_endline "5: Web and Internet";
+          print_endline "6: Foundations and Theory";
+          print_endline "7: Robotics and AI";
+          print_endline "8: Others";
+          print_string "Enter your choice: ";
+          let field_choice = read_int () in
+          let field =
+            match field_choice with
+            | 1 -> "Machine Learning/AI"
+            | 2 -> "Software Development"
+            | 3 -> "Data Science"
+            | 4 -> "Systems Programming"
+            | 5 -> "Web and Internet"
+            | 6 -> "Foundations and Theory"
+            | 7 -> "Robotics and AI"
+            | _ -> "Others"
+          in
+          let recommended_courses = recommend_courses field in
+          display_recommended_courses recommended_courses;
+          (* Calling the function from courses.ml *)
           interface netid
       | 0 ->
           print_endline "";
@@ -81,37 +114,39 @@ let rec login () =
     print_endline "";
     login ())
 
-let rec create_user () = 
-    try 
-        print_endline "Please enter your netid:";
-        let netid :string =  read_line () in  
-        print_endline "Please enter your password:";
-        let password : string = read_line () in
-        print_endline "Please enter your college:";
-        print_endline "0: College of Engineering";
-        print_endline "1: College of Arts & Sciences";
-        let college_num : int = read_int () in
-        let college = if college_num = 0 then "engineering" else "arts and sciences" in  
-        add_user_to_json_file netid password college; 
-        login () 
-    with Failure msg -> print_endline "Netid already exists; try again"; create_user ()
+let rec create_user () =
+  try
+    print_endline "Please enter your netid:";
+    let netid : string = read_line () in
+    print_endline "Please enter your password:";
+    let password : string = read_line () in
+    print_endline "Please enter your college:";
+    print_endline "0: College of Engineering";
+    print_endline "1: College of Arts & Sciences";
+    let college_num : int = read_int () in
+    let college =
+      if college_num = 0 then "engineering" else "arts and sciences"
+    in
+    add_user_to_json_file netid password college;
+    login ()
+  with Failure msg ->
+    print_endline "Netid already exists; try again";
+    create_user ()
 
-let rec login_or_create_user () = 
-    print_endline "Create User or Login";
-    print_endline "0: Login";
-    print_endline "1: Create User";
-    try 
-        match read_int () with 
-        | 0 -> 
-            login ()
-        | 1 -> 
-            create_user ()
-        | _ -> 
-            print_endline "Not an option; try again";
-            login_or_create_user ()
-    with Failure msg -> 
+let rec login_or_create_user () =
+  print_endline "Create User or Login";
+  print_endline "0: Login";
+  print_endline "1: Create User";
+  try
+    match read_int () with
+    | 0 -> login ()
+    | 1 -> create_user ()
+    | _ ->
         print_endline "Not an option; try again";
-        login_or_create_user ()  
+        login_or_create_user ()
+  with Failure msg ->
+    print_endline "Not an option; try again";
+    login_or_create_user ()
 
 (* let _ = print_all_users load_users_from_json *)
 

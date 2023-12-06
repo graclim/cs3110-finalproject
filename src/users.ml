@@ -36,7 +36,7 @@ let load_users_from_json =
         let schedule = make_schedule days time in
         make_course id name description credits schedule)
       courses_json
-  in 
+  in
   let json = Yojson.Basic.from_file "users.json" in
   let users_json = Util.to_list json in
   List.map
@@ -84,42 +84,42 @@ let user_to_json user =
       ( "courses",
         `List
           (List.map
-            (fun course ->
-              (* Convert each course to Yojson *)
-              (* Implement conversion logic for courses if needed *)
-              `Assoc
-                [
-                  ("id", `Int (get_course_id course));
-                  ("name", `String (get_course_name course));
-                  ("description", `String (get_course_description course));
-                  ("credits", `Float (get_course_credits course));
-                  ( "schedule",
-                    `Assoc
-                      [
-                        ( "days",
-                          `List
-                            (List.map
+             (fun course ->
+               (* Convert each course to Yojson *)
+               (* Implement conversion logic for courses if needed *)
+               `Assoc
+                 [
+                   ("id", `Int (get_course_id course));
+                   ("name", `String (get_course_name course));
+                   ("description", `String (get_course_description course));
+                   ("credits", `Float (get_course_credits course));
+                   ( "schedule",
+                     `Assoc
+                       [
+                         ( "days",
+                           `List
+                             (List.map
                                 (fun day -> `String day)
                                 (get_schedule_days (get_course_schedule course)))
-                        );
-                        ( "time",
-                          `Assoc
-                            [
-                              ( "start",
-                                `Int
-                                  (get_start_time
+                         );
+                         ( "time",
+                           `Assoc
+                             [
+                               ( "start",
+                                 `Int
+                                   (get_start_time
                                       (get_schedule_time
-                                        (get_course_schedule course))) );
-                              ( "finish",
-                                `Int
-                                  (get_finish_time
+                                         (get_course_schedule course))) );
+                               ( "finish",
+                                 `Int
+                                   (get_finish_time
                                       (get_schedule_time
-                                        (get_course_schedule course))) );
-                            ] );
-                      ] )
-                  (* Add other course fields as needed *);
-                ])
-            user.courses) );
+                                         (get_course_schedule course))) );
+                             ] );
+                       ] )
+                   (* Add other course fields as needed *);
+                 ])
+             user.courses) );
     ]
 
 (*update user courses*)
@@ -145,7 +145,9 @@ let update_user_courses courses netid =
 let change_college new_college user = { user with college = new_college }
 
 let authenticate netid password =
-  List.exists (fun user -> user.netid = netid && user.password = password) users
+  List.exists
+    (fun username -> username.netid = netid && username.password = password)
+    users
 
 let set_total_credits credits user = user.total_credits <- credits
 let get_netid user = user.netid
@@ -153,30 +155,37 @@ let get_total_credits user = user.total_credits
 let get_college user = user.college
 let get_courses user = user.courses
 
-(* Prints out total number of credits a student is planning on taking *)
+(* ANSI escape codes for colors *)
+let red = "\027[31m"
+let green = "\027[32m"
+let yellow = "\027[33m"
+let blue = "\027[34m"
+let reset = "\027[0m"
+
 let display_total_credits netid =
   try
     let user = List.find (fun u -> get_netid u = netid) users in
-    Printf.printf "Total credits for %s: %.2f\n" (get_netid user)
-      (get_total_credits user)
-  with Not_found -> print_endline "User not found."
+    Printf.printf "%sTotal credits for %s%s: %s%.2f%s credits\n" green
+      (get_netid user) reset yellow (get_total_credits user) reset
+  with Not_found -> Printf.printf "%sUser not found%s\n" red reset
 
 (* Prints out total number of credits a student is planning on taking *)
 let add_user_to_json_file netid password college =
-  print_endline "Hello "; 
+  print_endline "Hello ";
   let filename = "users.json" in
 
-  let curr_users = load_users_from_json in 
-  let rec check_netid_in_curr_users current_users = 
-    match current_users with 
-    | user :: t -> if user.netid = netid then true else check_netid_in_curr_users t  
-    | [] -> false in 
-  if check_netid_in_curr_users curr_users = false then
-    let new_user : user = make_user netid password college in 
-    let all_users = new_user :: load_users_from_json in 
-    let users_json = `List (List.map user_to_json all_users) in 
-    let oc = open_out filename in 
-    output_string oc (to_string users_json); 
-    close_out oc 
-  else 
-    failwith "Netid already in user"
+  let curr_users = load_users_from_json in
+  let rec check_netid_in_curr_users current_users =
+    match current_users with
+    | user :: t ->
+        if user.netid = netid then true else check_netid_in_curr_users t
+    | [] -> false
+  in
+  if check_netid_in_curr_users curr_users = false then (
+    let new_user : user = make_user netid password college in
+    let all_users = new_user :: load_users_from_json in
+    let users_json = `List (List.map user_to_json all_users) in
+    let oc = open_out filename in
+    output_string oc (to_string users_json);
+    close_out oc)
+  else failwith "Netid already in user"
