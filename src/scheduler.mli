@@ -28,5 +28,5 @@ val drop_course_name : string -> string -> unit
 val display_my_courses : unit -> unit
 (** Display courses that the user is currently enrolled in *)
 
-(*update the json for the user based on his courses*)
 val update_json : string -> unit
+(** update the json for the user based on his courses*)
