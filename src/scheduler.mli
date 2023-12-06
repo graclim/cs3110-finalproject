@@ -1,11 +1,11 @@
 open Courses
 open Users
 
-(*load the user courses based on net id*)
-val load_courses : string -> unit
-
 val my_courses : course list ref
 (** Mutable list representing the user's current courses *)
+
+(* load the user courses based on net id*)
+val load_courses : string -> unit
 
 val is_conflict : schedule -> schedule -> bool
 (** Check if two schedules conflict *)

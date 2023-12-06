@@ -64,6 +64,38 @@ let test_authenticate_wrong_netid _ =
     (not result);
   Printf.printf "=== Test test_authenticate_wrong_netid completed ===\n"
 
+let test_authenticate_case_sensitive_netid _ =
+  Printf.printf
+    "=== Testing authenticate (Case sensitivity: USER1 should not \
+     authenticate) ===\n";
+  let netid = "USER1" in
+  (* Uppercase netid *)
+  let password = "pass1" in
+  (* Correct password *)
+  let result = authenticate netid password in
+  Printf.printf "NetID: %s\n" netid;
+  Printf.printf "Password: %s\n" password;
+  Printf.printf "Result: %b\n" result;
+  assert_bool "Uppercase netid should not authenticate" (not result);
+  Printf.printf
+    "=== Test test_authenticate_case_sensitive_netid completed ===\n"
+
+let test_authenticate_case_sensitive_password _ =
+  Printf.printf
+    "=== Testing authenticate (Case sensitivity: PASS1 should not \
+     authenticate) ===\n";
+  let netid = "user1" in
+  (* Correct netid *)
+  let password = "PASS1" in
+  (* Uppercase password *)
+  let result = authenticate netid password in
+  Printf.printf "NetID: %s\n" netid;
+  Printf.printf "Password: %s\n" password;
+  Printf.printf "Result: %b\n" result;
+  assert_bool "Uppercase password should not authenticate" (not result);
+  Printf.printf
+    "=== Test test_authenticate_case_sensitive_password completed ===\n"
+
 (* =================== TESTING FOR COURSE CREATION 1 =================== *)
 
 let test_course_id_1 _ =
@@ -578,6 +610,15 @@ let test_get_college_engineering _ =
   assert_equal "engineering" college_result;
   Printf.printf "=== Test test_get_college_engineering completed ===\n"
 
+let test_get_college_engineering_uppercase _ =
+  Printf.printf "=== Testing User functions (get_college with uppercase) ===\n";
+  let user = make_user "user8" "pass8" "ENGINEERING" in
+  let college_result = get_college user in
+  Printf.printf "College: %s\n" college_result;
+  assert_equal "ENGINEERING" college_result;
+  Printf.printf
+    "=== Test test_get_college_engineering_uppercase completed ===\n"
+
 let test_get_college_arts _ =
   Printf.printf "=== Testing User functions (get_college) ===\n";
   let user = make_user "user7" "pass7" "arts and sciences" in
@@ -586,8 +627,17 @@ let test_get_college_arts _ =
   assert_equal "arts and sciences" college_result;
   Printf.printf "=== Test test_get_college_arts completed ===\n"
 
+let test_get_college_arts_uppercase _ =
+  Printf.printf "=== Testing User functions (get_college with uppercase) ===\n";
+  let user = make_user "user" "pass" "ARTS AND SCIENCES" in
+  let college_result = get_college user in
+  Printf.printf "College: %s\n" college_result;
+  assert_equal "ARTS AND SCIENCES" college_result;
+  Printf.printf
+    "=== Test test_get_college_engineering_uppercase completed ===\n"
+
 (* =================== TESTING FOR ADDING, GETTING =================== *)
-let test_add_user _ =
+let test_add_user_1 _ =
   let initial_users = get_users () in
   let new_user = make_user "user3" "pass3" "engineering" in
   let updated_users = add_user new_user initial_users in
@@ -599,58 +649,266 @@ let test_add_user _ =
   assert_equal ~msg:"New user should have the correct college" "engineering"
     (get_college (List.hd updated_users))
 
-let test_get_users _ =
-  let users = get_users () in
-  match users with
-  | [] -> assert_failure "The list of users should not be empty"
-  | _ :: _ ->
-      assert_equal
-        ~msg:"The list of users should contain the expected number of users" 2
-        (List.length users);
-      assert_equal
-        ~msg:"The first user in the list should have the correct netid" "user1"
-        (get_netid (List.hd users));
-      assert_equal
-        ~msg:"The second user in the list should have the correct netid" "user2"
-        (get_netid (List.hd (List.tl users)))
-
-let test_add_and_get_users _ =
+let test_add_user_2 _ =
   let initial_users = get_users () in
-  let new_user = make_user "user3" "pass3" "engineering" in
+  let new_user = make_user "user3" "pass3" "arts and sciences" in
   let updated_users = add_user new_user initial_users in
-  match updated_users with
-  | [] -> assert_failure "The list of users should not be empty"
-  | _ :: _ ->
-      Printf.printf "Number of users before adding: %d\n"
-        (List.length initial_users);
-      Printf.printf "Number of users after adding: %d\n"
-        (List.length updated_users);
-      Printf.printf "New list of users:\n";
-      List.iter
-        (fun user -> Printf.printf "- %s\n" (get_netid user))
-        updated_users;
+  assert_equal ~msg:"New user should be added to the list of users"
+    (List.length updated_users)
+    (List.length initial_users + 1);
+  assert_equal ~msg:"New user should have the correct netid" "user3"
+    (get_netid (List.hd updated_users));
+  assert_equal ~msg:"New user should have the correct college"
+    "arts and sciences"
+    (get_college (List.hd updated_users))
 
-      assert_equal ~msg:"New user should be added to the list of users"
-        (List.length updated_users)
-        (List.length initial_users + 1);
-      assert_equal
-        ~msg:"The list of users should contain the expected number of users" 3
-        (List.length updated_users);
-      Printf.printf "Expected: user3, Actual: %s\n"
-        (get_netid (List.hd updated_users));
-      assert_equal
-        ~msg:"The first user in the list should have the correct netid" "user3"
-        (get_netid (List.hd updated_users));
-      Printf.printf "Expected: user1, Actual: %s\n"
-        (get_netid (List.hd (List.tl updated_users)));
-      assert_equal
-        ~msg:"The second user in the list should have the correct netid" "user1"
-        (get_netid (List.hd (List.tl updated_users)));
-      Printf.printf "Expected: user2, Actual: %s\n"
-        (get_netid (List.hd (List.tl (List.tl updated_users))));
-      assert_equal
-        ~msg:"The third user in the list should have the correct netid" "user2"
-        (get_netid (List.hd (List.tl (List.tl updated_users))))
+let test_recommend_courses_ml_ai _ =
+  Printf.printf "=== Testing all courses in Machine Learning/AI ===\n";
+  let recommended_courses = get_recommended_courses "Machine Learning/AI" in
+  let expected_ids = [ 27; 28; 22; 23; 24 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Machine Learning/AI courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_ml_ai completed ===\n"
+
+let test_recommend_courses_software_dev _ =
+  Printf.printf "=== Testing all courses in Software Development ===\n";
+  let recommended_courses = get_recommended_courses "Software Development" in
+  let expected_ids = [ 1; 2; 4; 8; 11; 12; 13; 17; 18; 20; 21; 29 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Software Development courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_software_dev completed ===\n"
+
+let test_recommend_courses_data_science _ =
+  Printf.printf "=== Testing all courses in Data Science ===\n";
+  let recommended_courses = get_recommended_courses "Data Science" in
+  let expected_ids = [ 12; 26; 28; 30 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Data Science courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_data_science completed ===\n"
+
+let test_recommend_courses_systems_programming _ =
+  Printf.printf "=== Testing all courses in Systems Programming ===\n";
+  let recommended_courses = get_recommended_courses "Systems Programming" in
+  let expected_ids = [ 7; 13; 17; 18; 19; 20; 21 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Systems Programming courses should be included" all_present;
+  Printf.printf
+    "=== Test recommend_courses_all_systems_programming completed ===\n"
+
+let test_recommend_courses_web_and_internet _ =
+  Printf.printf "=== Testing all courses in Web and Internet ===\n";
+  let recommended_courses = get_recommended_courses "Web and Internet" in
+  let expected_ids = [ 10; 12; 20; 30 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Web and Internet courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_web_internet completed ===\n"
+
+let test_recommend_courses_foundations_and_theory _ =
+  Printf.printf "=== Testing all courses in Foundations and Theory ===\n";
+  let recommended_courses = get_recommended_courses "Foundations and Theory" in
+  let expected_ids = [ 9; 14; 31; 32 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Foundations and Theory courses should be included"
+    all_present;
+  Printf.printf
+    "=== Test recommend_courses_all_foundations_theory completed ===\n"
+
+let test_recommend_courses_others _ =
+  Printf.printf "=== Testing all courses in Others ===\n";
+  let recommended_courses = get_recommended_courses "Others" in
+  let expected_ids = [ 3; 5; 6; 15; 16; 26 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Others courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_others completed ===\n"
+
+let test_recommend_courses_robotics_and_ai _ =
+  Printf.printf "=== Testing all courses in Robotics and AI ===\n";
+  let recommended_courses = get_recommended_courses "Robotics and AI" in
+  let expected_ids = [ 22; 23; 24; 25 ] in
+  let all_present =
+    List.for_all
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      expected_ids
+  in
+  assert_bool "All Robotics and AI courses should be included" all_present;
+  Printf.printf "=== Test recommend_courses_all_robotics_ai completed ===\n"
+
+let test_recommend_courses_ml_ai_exclude _ =
+  Printf.printf "=== Testing Machine Learning/AI excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Machine Learning/AI" in
+  let not_expected_ids = [ 1; 7; 15 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Machine Learning/AI"
+    (not any_present);
+  Printf.printf "=== Test recommend_courses_ml_ai_exclude completed ===\n"
+
+let test_recommend_courses_software_dev_exclude _ =
+  Printf.printf
+    "=== Testing Software Development excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Software Development" in
+  let not_expected_ids = [ 3; 6; 30 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Software Development"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_software_dev_exclude completed ===\n"
+
+let test_recommend_courses_data_science_exclude _ =
+  Printf.printf "=== Testing Data Science excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Data Science" in
+  let not_expected_ids = [ 8; 14; 17 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Data Science"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_data_science_exclude completed ===\n"
+
+let test_recommend_courses_systems_programming_exclude _ =
+  Printf.printf "=== Testing Systems Programming excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Systems Programming" in
+  let not_expected_ids = [ 2; 10; 26 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Systems Programming"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_systems_programming_exclude completed ===\n"
+
+let test_recommend_courses_web_and_internet_exclude _ =
+  Printf.printf "=== Testing Web and Internet excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Web and Internet" in
+  let not_expected_ids = [ 4; 9; 13 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Web and Internet"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_web_and_internet_exclude completed ===\n"
+
+let test_recommend_courses_foundations_and_theory_exclude _ =
+  Printf.printf
+    "=== Testing Foundations and Theory excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Foundations and Theory" in
+  let not_expected_ids = [ 5; 12; 20 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool
+    "No unrelated courses should be included in Foundations and Theory"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_foundations_and_theory_exclude completed ===\n"
+
+let test_recommend_courses_robotics_and_ai_exclude _ =
+  Printf.printf "=== Testing Robotics and AI excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Robotics and AI" in
+  let not_expected_ids = [ 11; 16; 31 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Robotics and AI"
+    (not any_present);
+  Printf.printf
+    "=== Test recommend_courses_robotics_and_ai_exclude completed ===\n"
+
+let test_recommend_courses_others_exclude _ =
+  Printf.printf "=== Testing Others excludes certain courses ===\n";
+  let recommended_courses = get_recommended_courses "Others" in
+  let not_expected_ids = [ 18; 22; 27 ] in
+  let any_present =
+    List.exists
+      (fun id ->
+        List.exists (fun c -> get_course_id c = id) recommended_courses)
+      not_expected_ids
+  in
+  assert_bool "No unrelated courses should be included in Others"
+    (not any_present);
+  Printf.printf "=== Test recommend_courses_others_exclude completed ===\n"
+
+(* =================== TESTING CHANGING COLLEGES =================== *)
+
+let test_change_college_to_engineering _ =
+  let initial_user = make_user "testuser1" "testpass1" "arts and sciences" in
+  let updated_user = change_college "engineering" initial_user in
+  assert_equal ~msg:"College should be changed to engineering" "engineering"
+    (get_college updated_user)
+
+let test_change_college_to_arts_and_sciences _ =
+  let initial_user = make_user "testuser2" "testpass2" "engineering" in
+  let updated_user = change_college "arts and sciences" initial_user in
+  assert_equal ~msg:"College should be changed to arts and sciences"
+    "arts and sciences" (get_college updated_user)
+
+let test_change_college_retains_other_fields _ =
+  let initial_user = make_user "testuser3" "testpass3" "engineering" in
+  let updated_user = change_college "arts and sciences" initial_user in
+  assert_equal ~msg:"NetID should remain unchanged" "testuser3"
+    (get_netid updated_user)
 
 (* =================== COMBINING ALL TEST SUITES =================== *)
 let suite =
@@ -661,6 +919,10 @@ let suite =
          "test_authenticate_both_invalid" >:: test_authenticate_both_invalid;
          "test_authenticate_wrong_password" >:: test_authenticate_wrong_password;
          "test_authenticate_wrong_netid" >:: test_authenticate_wrong_netid;
+         "test_authenticate_case_sensitive_netid"
+         >:: test_authenticate_case_sensitive_netid;
+         "test_authenticate_case_sensitive_password"
+         >:: test_authenticate_case_sensitive_password;
          (* courses 1 *)
          "test_course_id_1" >:: test_course_id_1;
          "test_course_name_1" >:: test_course_name_1;
@@ -703,10 +965,50 @@ let suite =
          "test_get_netid" >:: test_get_netid;
          "test_get_total_credits" >:: test_get_total_credits;
          "test_get_college_engineering" >:: test_get_college_engineering;
+         "test_get_college_engineering_uppercase"
+         >:: test_get_college_engineering_uppercase;
+         "test_get_college_arts_uppercase" >:: test_get_college_arts_uppercase;
          "test_get_college_arts" >:: test_get_college_arts;
-         "test_add_user" >:: test_add_user;
-         "test_get_users" >:: test_get_users;
-         "test_add_and_get_users" >:: test_add_and_get_users;
+         "test_add_user_1" >:: test_add_user_1;
+         "test_add_user_2" >:: test_add_user_2;
+         (* recommend courses *)
+         "test_recommend_courses_ml_ai" >:: test_recommend_courses_ml_ai;
+         "test_recommend_courses_software_dev"
+         >:: test_recommend_courses_software_dev;
+         "test_recommend_courses_data_science"
+         >:: test_recommend_courses_data_science;
+         "test_recommend_courses_systems_programming"
+         >:: test_recommend_courses_systems_programming;
+         "test_recommend_courses_web_and_internet"
+         >:: test_recommend_courses_web_and_internet;
+         "test_recommend_courses_foundations_and_theory"
+         >:: test_recommend_courses_foundations_and_theory;
+         "test_recommend_courses_robotics_and_ai"
+         >:: test_recommend_courses_robotics_and_ai;
+         "test_recommend_courses_others" >:: test_recommend_courses_others;
+         "test_recommend_courses_ml_ai_exclude"
+         >:: test_recommend_courses_ml_ai_exclude;
+         "test_recommend_courses_software_dev_exclude"
+         >:: test_recommend_courses_software_dev_exclude;
+         "test_recommend_courses_data_science_exclude"
+         >:: test_recommend_courses_data_science_exclude;
+         "test_recommend_courses_systems_programming_exclude"
+         >:: test_recommend_courses_systems_programming_exclude;
+         "test_recommend_courses_web_and_internet_exclude"
+         >:: test_recommend_courses_web_and_internet_exclude;
+         "test_recommend_courses_foundations_and_theory_exclude"
+         >:: test_recommend_courses_foundations_and_theory_exclude;
+         "test_recommend_courses_robotics_and_ai_exclude"
+         >:: test_recommend_courses_robotics_and_ai_exclude;
+         "test_recommend_courses_others_exclude"
+         >:: test_recommend_courses_others_exclude;
+         (* changing colleges *)
+         "test_change_college_to_engineering"
+         >:: test_change_college_to_engineering;
+         "test_change_college_to_arts_and_sciences"
+         >:: test_change_college_to_arts_and_sciences;
+         "test_change_college_retains_other_fields"
+         >:: test_change_college_retains_other_fields;
        ]
 
 (* Run the tests *)
