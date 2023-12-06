@@ -1,3 +1,0 @@
-
-1. Need cleaner display for display all my courses 
-2. adding courses with conflicts should not update total credits

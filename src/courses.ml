@@ -27,7 +27,6 @@ let make_schedule days time = { days; time }
 let make_course id name description credits schedule =
   { id; name; description; credits; schedule }
 
-(* A helper function to extract time information. *)
 let to_time json =
   let open Yojson.Basic.Util in
   {
@@ -121,7 +120,7 @@ let get_terminal_width () =
     let _ = Unix.close_process_in in_channel in
     width
   with _ -> 80 (* Default width if tput cols fails *)
-  
+
 let recommend_courses user_field =
   match Hashtbl.find_opt field_to_courses user_field with
   | Some recommended_courses -> recommended_courses

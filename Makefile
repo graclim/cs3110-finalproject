@@ -20,10 +20,10 @@ clean:
 	dune clean
 	rm -f final.zip
 
-docs:
+doc:
 	dune build @doc
 
-open-docs:
+open-doc:
 	LIB="Course_scheduler"; \
 	if [[ "$$OSTYPE" == "darwin"* ]]; then \
 			open _build/default/_doc/_html/$$LIB/$$LIB/; \

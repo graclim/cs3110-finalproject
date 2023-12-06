@@ -83,7 +83,8 @@ val get_terminal_width : unit -> int
 (* Function to recommend courses based on a given field *)
 val recommend_courses : string -> course list
 
-(* Function to get recommended courses - this is effectively an alias to recommend_courses *)
+(* Function to get recommended courses - this is effectively an alias to
+   recommend_courses *)
 val get_recommended_courses : string -> course list
 
 (* Function to display a list of recommended courses *)

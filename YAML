@@ -13,14 +13,12 @@ group:
 pm:
   name: Ankit Lakkapragada
   netid: asl256
-# Set to false if you don't want your gallery entry to be public.
-publish: true
+publish: false
 # Pithy title
 title: "Big Red Scheduler"
-# OK if this is a Cornell Github link, but public gallery viewers won't be able to see it.
 git-repo: "https://github.com/graclim/cs3110-finalproject/tree/main"
 # If you have no demo screencast, replace the url string with an empty string ""
-# demo-video-url: "https://www.youtube.com/watch?v=eSBybJGZoCU"
+demo-video-url: ""
 # Write a short, attention-grabbing description of your project.
 desc: >
   Our project is a course scheduling platform that will be used by students 

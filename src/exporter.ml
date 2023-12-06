@@ -51,7 +51,8 @@ let current_weekday_string () =
 
 (* Function to add days to a date *)
 let add_days_to_date (year, month, day) offset =
-  (* Simple implementation: assumes all months have 30 days and doesn't handle year boundaries *)
+  (* Simple implementation: assumes all months have 30 days and doesn't handle
+     year boundaries *)
   let total_days = day + offset in
   let new_day = total_days mod 30 in
   let new_month = month + (total_days / 30) in
@@ -59,24 +60,46 @@ let add_days_to_date (year, month, day) offset =
 
 (* Convert a course schedule to an ICS event, accounting for the current week *)
 let course_to_ics_event course current_weekday =
-  List.map (fun day ->
-      let weekday_offset = (weekday_number day) - (weekday_number current_weekday) in
-      let event_date = add_days_to_date (current_system_date ()) weekday_offset in
+  List.map
+    (fun day ->
+      let weekday_offset =
+        weekday_number day - weekday_number current_weekday
+      in
+      let event_date =
+        add_days_to_date (current_system_date ()) weekday_offset
+      in
       let time = course.schedule.time in
       let start_time = minutes_to_hhmmss time.start in
       let end_time = minutes_to_hhmmss time.finish in
       Printf.sprintf
-        "BEGIN:VEVENT\nDTSTART;TZID=America/New_York:%sT%s\nDTEND;TZID=America/New_York:%sT%s\nRRULE:FREQ=WEEKLY;BYDAY=%s\nSUMMARY:%s\nDESCRIPTION:%s\nEND:VEVENT\n"
-        event_date start_time event_date end_time (day_to_ics_date day) course.name course.description
-    ) course.schedule.days
+        "BEGIN:VEVENT\n\
+         DTSTART;TZID=America/New_York:%sT%s\n\
+         DTEND;TZID=America/New_York:%sT%s\n\
+         RRULE:FREQ=WEEKLY;BYDAY=%s\n\
+         SUMMARY:%s\n\
+         DESCRIPTION:%s\n\
+         END:VEVENT\n"
+        event_date start_time event_date end_time (day_to_ics_date day)
+        course.name course.description)
+    course.schedule.days
   |> String.concat "\n"
 
 (* Exports a user's course schedule to an ICS file *)
 let export_user_schedule_to_ics user =
   let current_weekday = current_weekday_string () in
-  let ics_header = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//YourOrg//YourApp//EN\nCALSCALE:GREGORIAN\n" in
+  let ics_header =
+    "BEGIN:VCALENDAR\n\
+     VERSION:2.0\n\
+     PRODID:-//YourOrg//YourApp//EN\n\
+     CALSCALE:GREGORIAN\n"
+  in
   let ics_footer = "END:VCALENDAR" in
-  let ics_events = List.fold_left (fun acc course -> acc ^ (course_to_ics_event course current_weekday) ^ "\n") "" user.courses in
+  let ics_events =
+    List.fold_left
+      (fun acc course ->
+        acc ^ course_to_ics_event course current_weekday ^ "\n")
+      "" user.courses
+  in
   let ics_content = ics_header ^ ics_events ^ ics_footer in
   let filename = Printf.sprintf "%s_schedule.ics" user.netid in
   let oc = open_out filename in
