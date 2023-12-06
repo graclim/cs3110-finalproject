@@ -1,12 +1,24 @@
 open Yojson
 
-type time
+type time = {
+  start : int;
+  finish : int;
+}
 (** Type representing time with a start and finish as integers *)
 
-type schedule
+type schedule = {
+  days : string list;
+  time : time;
+}
 (** Type representing a schedule with a list of days and a time *)
 
-type course
+type course = {
+  id : int;
+  name : string;
+  description : string;
+  credits : float;
+  schedule : schedule;
+}
 (** Type representing a course with an id, name, description, credits, and
     schedule *)
 

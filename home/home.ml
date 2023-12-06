@@ -3,6 +3,7 @@ open Yojson
 open Users
 open Courses
 open Scheduler
+open Exporter
 
 (* Main user interface *)
 let rec main netid =
@@ -28,83 +29,89 @@ let rec main netid =
     print_endline
       "8: Get course recommendations - Get personalized course suggestions \
        based on specific fields.";
+    print_endline "9: Export my schedule to calendar";
     print_endline "0: Exit - Log out of the Course Scheduler System.";
     print_endline "------------------------------------------------";
     print_string "Please enter your choice and press Enter: ";
     try
       match read_int () with
       | 1 ->
-          print_endline "";
-          display_courses ();
-          interface netid
+        print_endline "";
+        display_courses ();
+        interface netid
       | 2 ->
-          print_endline "";
-          display_my_courses ();
-          interface netid
+        print_endline "";
+        display_my_courses ();
+        interface netid
       | 3 ->
-          print_endline "";
-          print_string "Enter course ID to add: ";
-          let read = read_int () in
-          add_course_ID netid read;
-          interface netid
+        print_endline "";
+        print_string "Enter course ID to add: ";
+        let read = read_int () in
+        add_course_ID netid read;
+        interface netid
       | 4 ->
-          print_endline "";
-          print_string "Enter course ID to drop: ";
-          let read = read_line () in
-          drop_course_ID netid (int_of_string read);
-          interface netid
+        print_endline "";
+        print_string "Enter course ID to drop: ";
+        let read = read_line () in
+        drop_course_ID netid (int_of_string read);
+        interface netid
       | 5 ->
-          print_endline "";
-          print_string "Enter course name to add: ";
-          let read = read_line () in
-          add_course_name netid read;
-          interface netid
+        print_endline "";
+        print_string "Enter course name to add: ";
+        let read = read_line () in
+        add_course_name netid read;
+        interface netid
       | 6 ->
-          print_endline "";
-          print_string "Enter course ID to drop: ";
-          let read = read_line () in
-          drop_course_name netid read;
-          interface netid
+        print_endline "";
+        print_string "Enter course ID to drop: ";
+        let read = read_line () in
+        drop_course_name netid read;
+        interface netid
       | 7 ->
-          print_endline "";
-          display_total_credits netid;
-          interface netid
+        print_endline "";
+        display_total_credits netid;
+        interface netid
       | 8 ->
-          print_endline "";
-          print_endline "Select a field of interest for course recommendations:";
-          print_endline "1: Machine Learning/AI";
-          print_endline "2: Software Development";
-          print_endline "3: Data Science";
-          print_endline "4: Systems Programming";
-          print_endline "5: Web and Internet";
-          print_endline "6: Foundations and Theory";
-          print_endline "7: Robotics and AI";
-          print_endline "8: Others";
-          print_endline "";
-          print_string "Enter your choice: ";
-          let field_choice = read_int () in
-          let field =
-            match field_choice with
-            | 1 -> "Machine Learning/AI"
-            | 2 -> "Software Development"
-            | 3 -> "Data Science"
-            | 4 -> "Systems Programming"
-            | 5 -> "Web and Internet"
-            | 6 -> "Foundations and Theory"
-            | 7 -> "Robotics and AI"
-            | _ -> "Others"
-          in
-          let recommended_courses = recommend_courses field in
-          display_recommended_courses recommended_courses;
-          (* Calling the function from courses.ml *)
-          interface netid
+        print_endline "";
+        print_endline "Select a field of interest for course recommendations:";
+        print_endline "1: Machine Learning/AI";
+        print_endline "2: Software Development";
+        print_endline "3: Data Science";
+        print_endline "4: Systems Programming";
+        print_endline "5: Web and Internet";
+        print_endline "6: Foundations and Theory";
+        print_endline "7: Robotics and AI";
+        print_endline "8: Others";
+        print_endline "";
+        print_string "Enter your choice: ";
+        let field_choice = read_int () in
+        let field =
+          match field_choice with
+          | 1 -> "Machine Learning/AI"
+          | 2 -> "Software Development"
+          | 3 -> "Data Science"
+          | 4 -> "Systems Programming"
+          | 5 -> "Web and Internet"
+          | 6 -> "Foundations and Theory"
+          | 7 -> "Robotics and AI"
+          | _ -> "Others"
+        in
+        let recommended_courses = recommend_courses field in
+        display_recommended_courses recommended_courses;
+        (* Calling the function from courses.ml *)
+        interface netid
+      | 9 ->
+        let user = List.find (fun u -> u.netid = netid) users in
+        export_user_schedule_to_ics user;
+        print_endline "Schedule exported successfully.";
+        interface netid
       | 0 ->
-          print_endline "";
-          print_endline "Bye!"
+        print_endline "";
+        print_endline "Bye!"
       | _ ->
-          print_endline "";
-          print_endline "Invalid option";
-          interface netid
+        print_endline "";
+        print_endline "Invalid option";
+        interface netid
     with Failure msg ->
       print_endline "";
       print_endline "Invalid option";
@@ -230,9 +237,9 @@ let rec login_or_create_user () =
     | 0 -> login ()
     | 1 -> create_user ()
     | _ ->
-        print_endline "";
-        print_endline "Not an option; try again";
-        login_or_create_user ()
+      print_endline "";
+      print_endline "Not an option; try again";
+      login_or_create_user ()
   with Failure msg ->
     print_endline "";
     print_endline "Not an option; try again";
