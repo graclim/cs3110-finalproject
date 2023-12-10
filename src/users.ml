@@ -39,23 +39,25 @@ let load_users_from_json : user list ref =
   in
   let json = Yojson.Basic.from_file "users.json" in
   let users_json = Util.to_list json in
-  ref (List.map
-    (fun user_json ->
-      let netid = Util.to_string (Util.member "netid" user_json) in
-      let password = Util.to_string (Util.member "password" user_json) in
-      let total_credits =
-        Util.to_float (Util.member "total_credits" user_json)
-      in
-      let college = Util.to_string (Util.member "college" user_json) in
-      let user_courses =
-        try
-          let courses_json = Util.member "courses" user_json |> Util.to_list in
-          load_courses courses_json
-        with _ -> []
-      in
-      { netid; password; total_credits; college; courses = user_courses })
-    users_json)
-
+  ref
+    (List.map
+       (fun user_json ->
+         let netid = Util.to_string (Util.member "netid" user_json) in
+         let password = Util.to_string (Util.member "password" user_json) in
+         let total_credits =
+           Util.to_float (Util.member "total_credits" user_json)
+         in
+         let college = Util.to_string (Util.member "college" user_json) in
+         let user_courses =
+           try
+             let courses_json =
+               Util.member "courses" user_json |> Util.to_list
+             in
+             load_courses courses_json
+           with _ -> []
+         in
+         { netid; password; total_credits; college; courses = user_courses })
+       users_json)
 
 let print_all_users l =
   let print_user user =
