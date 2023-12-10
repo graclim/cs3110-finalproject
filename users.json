@@ -1,1 +1,157 @@
-[{"netid":"yhw4","password":"1111","total_credits":15.5,"college":"engineering","courses":[{"id":30,"name":"CS4812","description":"Quantum Information Processing","credits":3.0,"schedule":{"days":["Wednesday"],"time":{"start":965,"finish":1040}}},{"id":11,"name":"CS3110","description":"Data Structures and Functional Programming","credits":4.0,"schedule":{"days":["Monday","Wednesday","Friday"],"time":{"start":675,"finish":725}}},{"id":2,"name":"CS1112","description":"Introduction to Computing: An Engineering and Science Perspective","credits":4.0,"schedule":{"days":["Monday","Wednesday","Friday"],"time":{"start":610,"finish":660}}},{"id":4,"name":"CS1133","description":"Short Course in Python","credits":1.5,"schedule":{"days":["Tuesday","Thursday"],"time":{"start":540,"finish":615}}},{"id":20,"name":"CS4620","description":"Introduction to Computer Graphics","credits":3.0,"schedule":{"days":["Monday","Wednesday","Friday"],"time":{"start":800,"finish":850}}}]},{"netid":"user1","password":"pass1","total_credits":11.5,"college":"engineering","courses":[{"id":3,"name":"CS1132","description":"Short Course in MATLAB","credits":1.5,"schedule":{"days":["Tuesday","Thursday"],"time":{"start":540,"finish":615}}},{"id":2,"name":"CS1112","description":"Introduction to Computing: An Engineering and Science Perspective","credits":4.0,"schedule":{"days":["Monday","Wednesday","Friday"],"time":{"start":610,"finish":660}}},{"id":1,"name":"CS1110","description":"Introduction to Computing: A Design and Development Perspective","credits":4.0,"schedule":{"days":["Monday","Wednesday","Friday"],"time":{"start":545,"finish":595}}},{"id":21,"name":"CS4621","description":"Computer Graphics Practicum","credits":2.0,"schedule":{"days":["Monday"],"time":{"start":0,"finish":1}}}]},{"netid":"user2","password":"pass2","total_credits":5.0,"college":"arts and sciences","courses":[{"id":21,"name":"CS4621","description":"Computer Graphics Practicum","credits":2.0,"schedule":{"days":["Monday"],"time":{"start":0,"finish":1}}},{"id":22,"name":"CS4700","description":"Foundations of Artificial Intelligence","credits":3.0,"schedule":{"days":["Tuesday","Thursday"],"time":{"start":900,"finish":975}}}]}]
+[
+  {
+    "netid": "qwe",
+    "password": "qwe",
+    "total_credits": 0.0,
+    "college": "engineering",
+    "courses": []
+  },
+  {
+    "netid": "qq",
+    "password": "qq",
+    "total_credits": 0.0,
+    "college": "engineering",
+    "courses": []
+  },
+  {
+    "netid": "as",
+    "password": "as",
+    "total_credits": 0.0,
+    "college": "engineering",
+    "courses": []
+  },
+  {
+    "netid": "yhw4",
+    "password": "1111",
+    "total_credits": 15.5,
+    "college": "engineering",
+    "courses": [
+      {
+        "id": 30,
+        "name": "CS4812",
+        "description": "Quantum Information Processing",
+        "credits": 3.0,
+        "schedule": {
+          "days": [ "Wednesday" ],
+          "time": { "start": 965, "finish": 1040 }
+        }
+      },
+      {
+        "id": 11,
+        "name": "CS3110",
+        "description": "Data Structures and Functional Programming",
+        "credits": 4.0,
+        "schedule": {
+          "days": [ "Monday", "Wednesday", "Friday" ],
+          "time": { "start": 675, "finish": 725 }
+        }
+      },
+      {
+        "id": 2,
+        "name": "CS1112",
+        "description": "Introduction to Computing: An Engineering and Science Perspective",
+        "credits": 4.0,
+        "schedule": {
+          "days": [ "Monday", "Wednesday", "Friday" ],
+          "time": { "start": 610, "finish": 660 }
+        }
+      },
+      {
+        "id": 4,
+        "name": "CS1133",
+        "description": "Short Course in Python",
+        "credits": 1.5,
+        "schedule": {
+          "days": [ "Tuesday", "Thursday" ],
+          "time": { "start": 540, "finish": 615 }
+        }
+      },
+      {
+        "id": 20,
+        "name": "CS4620",
+        "description": "Introduction to Computer Graphics",
+        "credits": 3.0,
+        "schedule": {
+          "days": [ "Monday", "Wednesday", "Friday" ],
+          "time": { "start": 800, "finish": 850 }
+        }
+      }
+    ]
+  },
+  {
+    "netid": "user1",
+    "password": "pass1",
+    "total_credits": 11.5,
+    "college": "engineering",
+    "courses": [
+      {
+        "id": 3,
+        "name": "CS1132",
+        "description": "Short Course in MATLAB",
+        "credits": 1.5,
+        "schedule": {
+          "days": [ "Tuesday", "Thursday" ],
+          "time": { "start": 540, "finish": 615 }
+        }
+      },
+      {
+        "id": 2,
+        "name": "CS1112",
+        "description": "Introduction to Computing: An Engineering and Science Perspective",
+        "credits": 4.0,
+        "schedule": {
+          "days": [ "Monday", "Wednesday", "Friday" ],
+          "time": { "start": 610, "finish": 660 }
+        }
+      },
+      {
+        "id": 1,
+        "name": "CS1110",
+        "description": "Introduction to Computing: A Design and Development Perspective",
+        "credits": 4.0,
+        "schedule": {
+          "days": [ "Monday", "Wednesday", "Friday" ],
+          "time": { "start": 545, "finish": 595 }
+        }
+      },
+      {
+        "id": 21,
+        "name": "CS4621",
+        "description": "Computer Graphics Practicum",
+        "credits": 2.0,
+        "schedule": {
+          "days": [ "Monday" ],
+          "time": { "start": 0, "finish": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "netid": "user2",
+    "password": "pass2",
+    "total_credits": 5.0,
+    "college": "arts and sciences",
+    "courses": [
+      {
+        "id": 21,
+        "name": "CS4621",
+        "description": "Computer Graphics Practicum",
+        "credits": 2.0,
+        "schedule": {
+          "days": [ "Monday" ],
+          "time": { "start": 0, "finish": 1 }
+        }
+      },
+      {
+        "id": 22,
+        "name": "CS4700",
+        "description": "Foundations of Artificial Intelligence",
+        "credits": 3.0,
+        "schedule": {
+          "days": [ "Tuesday", "Thursday" ],
+          "time": { "start": 900, "finish": 975 }
+        }
+      }
+    ]
+  }
+]
