@@ -675,10 +675,10 @@ let test_get_college_arts_uppercase _ =
 let test_add_user_1 _ =
   let initial_users = get_users () in
   let new_user = make_user "user3" "pass3" "engineering" in
-  let updated_users = add_user new_user initial_users in
+  let updated_users = add_user new_user !initial_users in
   assert_equal ~msg:"New user should be added to the list of users"
     (List.length updated_users)
-    (List.length initial_users + 1);
+    (List.length !initial_users + 1);
   assert_equal ~msg:"New user should have the correct netid" "user3"
     (get_netid (List.hd updated_users));
   assert_equal ~msg:"New user should have the correct college" "engineering"
@@ -687,10 +687,10 @@ let test_add_user_1 _ =
 let test_add_user_2 _ =
   let initial_users = get_users () in
   let new_user = make_user "user3" "pass3" "arts and sciences" in
-  let updated_users = add_user new_user initial_users in
+  let updated_users = add_user new_user !initial_users in
   assert_equal ~msg:"New user should be added to the list of users"
     (List.length updated_users)
-    (List.length initial_users + 1);
+    (List.length !initial_users + 1);
   assert_equal ~msg:"New user should have the correct netid" "user3"
     (get_netid (List.hd updated_users));
   assert_equal ~msg:"New user should have the correct college"

@@ -14,7 +14,7 @@ let make_user netid password college =
 
 let add_user new_user users_list = new_user :: users_list
 
-let load_users_from_json =
+let load_users_from_json : user list ref =
   let rec load_courses courses_json =
     List.map
       (fun course_json ->
@@ -39,22 +39,25 @@ let load_users_from_json =
   in
   let json = Yojson.Basic.from_file "users.json" in
   let users_json = Util.to_list json in
-  List.map
-    (fun user_json ->
-      let netid = Util.to_string (Util.member "netid" user_json) in
-      let password = Util.to_string (Util.member "password" user_json) in
-      let total_credits =
-        Util.to_float (Util.member "total_credits" user_json)
-      in
-      let college = Util.to_string (Util.member "college" user_json) in
-      let user_courses =
-        try
-          let courses_json = Util.member "courses" user_json |> Util.to_list in
-          load_courses courses_json
-        with _ -> []
-      in
-      { netid; password; total_credits; college; courses = user_courses })
-    users_json
+  ref
+    (List.map
+       (fun user_json ->
+         let netid = Util.to_string (Util.member "netid" user_json) in
+         let password = Util.to_string (Util.member "password" user_json) in
+         let total_credits =
+           Util.to_float (Util.member "total_credits" user_json)
+         in
+         let college = Util.to_string (Util.member "college" user_json) in
+         let user_courses =
+           try
+             let courses_json =
+               Util.member "courses" user_json |> Util.to_list
+             in
+             load_courses courses_json
+           with _ -> []
+         in
+         { netid; password; total_credits; college; courses = user_courses })
+       users_json)
 
 let print_all_users l =
   let print_user user =
@@ -69,7 +72,7 @@ let print_all_users l =
   in
   List.iter print_user l
 
-let users = load_users_from_json
+let users : user list ref = load_users_from_json
 let get_users () = users
 
 (* Function to convert a single user to Yojson *)
@@ -134,10 +137,10 @@ let update_user_courses courses netid =
     | course :: t -> get_course_credits course +. total_credits t
     | [] -> 0.0
   in
-  let user = find_user users netid in
+  let user = find_user !users netid in
   user.courses <- courses;
   user.total_credits <- total_credits courses;
-  let users_json = `List (List.map user_to_json users) in
+  let users_json = `List (List.map user_to_json !users) in
   let oc = open_out "users.json" in
   output_string oc (to_string users_json);
   close_out oc
@@ -147,7 +150,7 @@ let change_college new_college user = { user with college = new_college }
 let authenticate netid password =
   List.exists
     (fun username -> username.netid = netid && username.password = password)
-    users
+    !users
 
 let set_total_credits credits user = user.total_credits <- credits
 let get_netid user = user.netid
@@ -164,28 +167,29 @@ let reset = "\027[0m"
 
 let display_total_credits netid =
   try
-    let user = List.find (fun u -> get_netid u = netid) users in
+    let user = List.find (fun u -> get_netid u = netid) !users in
     Printf.printf "%sTotal credits for %s%s: %s%.2f%s credits\n" green
       (get_netid user) reset yellow (get_total_credits user) reset
   with Not_found -> Printf.printf "%sUser not found%s\n" red reset
 
 (* Prints out total number of credits a student is planning on taking *)
 let add_user_to_json_file netid password college =
-  print_endline "Hello ";
   let filename = "users.json" in
 
   let curr_users = load_users_from_json in
-  let rec check_netid_in_curr_users current_users =
-    match current_users with
-    | user :: t ->
-        if user.netid = netid then true else check_netid_in_curr_users t
-    | [] -> false
-  in
-  if check_netid_in_curr_users curr_users = false then (
-    let new_user : user = make_user netid password college in
-    let all_users = new_user :: load_users_from_json in
+  let user_exists = List.exists (fun u -> u.netid = netid) !curr_users in
+  if user_exists then failwith "Netid already in use"
+  else
+    let new_user = make_user netid password college in
+    let all_users = new_user :: !curr_users in
     let users_json = `List (List.map user_to_json all_users) in
-    let oc = open_out filename in
-    output_string oc (to_string users_json);
-    close_out oc)
-  else failwith "Netid already in user"
+    let oc =
+      open_out_gen [ Open_creat; Open_trunc; Open_wronly ] 0o666 filename
+    in
+    try
+      output_string oc (Yojson.Basic.pretty_to_string users_json);
+      close_out oc;
+      users := all_users (* Update the in-memory users list *)
+    with e ->
+      close_out_noerr oc;
+      raise e

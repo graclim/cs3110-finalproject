@@ -101,7 +101,7 @@ let rec main netid =
           (* Calling the function from courses.ml *)
           interface netid
       | 9 ->
-          let user = List.find (fun u -> u.netid = netid) users in
+          let user = List.find (fun u -> u.netid = netid) !users in
           export_user_schedule_to_ics user;
           print_endline "Schedule exported successfully.";
           interface netid

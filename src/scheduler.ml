@@ -14,7 +14,7 @@ let load_courses netid =
     | [] -> failwith "User does not exist"
   in
   let users_list = load_users_from_json in
-  my_courses := find_user_courses users_list netid
+  my_courses := find_user_courses !users_list netid
 
 (* A function to check if two schedules conflict *)
 let is_conflict (s1 : schedule) (s2 : schedule) : bool =
@@ -47,7 +47,7 @@ let add_course_ID netid course_id =
     let course_to_add =
       List.find (fun c -> get_course_id c = course_id) cs_courses
     in
-    let user = List.find (fun u -> get_netid u = netid) users in
+    let user = List.find (fun u -> get_netid u = netid) !users in
     let current_credits = total_credits !my_courses in
 
     if
@@ -79,7 +79,7 @@ let add_course_name netid course_name =
           = String.lowercase_ascii course_name)
         cs_courses
     in
-    let user = List.find (fun u -> Users.get_netid u = netid) Users.users in
+    let user = List.find (fun u -> Users.get_netid u = netid) !Users.users in
     let current_credits = total_credits !my_courses in
 
     if
@@ -111,7 +111,7 @@ let drop_course_ID netid course_id =
     in
     my_courses :=
       List.filter (fun c -> get_course_id c <> course_id) !my_courses;
-    let user = List.find (fun u -> Users.get_netid u = netid) Users.users in
+    let user = List.find (fun u -> Users.get_netid u = netid) !Users.users in
     Users.set_total_credits
       (Users.get_total_credits user -. get_course_credits course_to_drop)
       user;
@@ -133,7 +133,7 @@ let drop_course_name netid course_name =
       List.filter
         (fun c -> get_course_name c <> get_course_name course_to_drop)
         !my_courses;
-    let user = List.find (fun u -> Users.get_netid u = netid) Users.users in
+    let user = List.find (fun u -> Users.get_netid u = netid) !Users.users in
     Users.set_total_credits
       (Users.get_total_credits user -. get_course_credits course_to_drop)
       user;

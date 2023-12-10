@@ -18,16 +18,16 @@ val make_user : string -> string -> string -> user
 val add_user : user -> user list -> user list
 (** Add a user to the list of users *)
 
-val load_users_from_json : user list
+val load_users_from_json : user list ref
 (** Load current users from a JSON file into a list of users *)
 
 val print_all_users : user list -> unit
 (** Print all users in the provided list *)
 
-val users : user list
+val users : user list ref
 (** A list of users loaded from a JSON file *)
 
-val get_users : unit -> user list
+val get_users : unit -> user list ref
 (** Get the list of users *)
 
 val user_to_json : user -> Yojson.Basic.t
